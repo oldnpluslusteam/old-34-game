@@ -13,8 +13,8 @@ class Spaceship(GameEntity,
                 StandardSpaceEntity,
                 SmallEntity):
 
-    _standardAngleVelocity = 100
-    _standardVelocity = 300
+    _standardAngleVelocity = 10
+    _standardVelocity = 1
 
     def hitBig(self, entity):
         GAME_CONSOLE.write("DIED!!!")
@@ -49,17 +49,18 @@ class Spaceship(GameEntity,
         self.mass = 3.0
         self.inertion = 0.9
 
-    def handle_velocity(self, vector):
-        self.velocity = (vector[0]*self._standardVelocity, vector[1]*self._standardVelocity)
+    def handle_velocity(self, vector, dt):
+        v = self.velocity
+        self.velocity = v[0] + vector[0]*self._standardVelocity, v[1] + vector[1]*self._standardVelocity
 
-    def handle_left_engine(self, dt = 0):
+    def handle_left_engine(self, dt):
         self.angularVelocity += self._standardAngleVelocity*dt
-        self.handle_velocity(directionFromAngle(self.rotation))
+        self.handle_velocity(directionFromAngle(self.rotation), dt)
         self.change_fuel(-self.fuelInSecond*dt)
 
-    def handle_right_engine(self, dt = 0):
+    def handle_right_engine(self, dt):
         self.angularVelocity -= self._standardAngleVelocity*dt
-        self.handle_velocity(directionFromAngle(self.rotation))
+        self.handle_velocity(directionFromAngle(self.rotation), dt)
         self.change_fuel(-self.fuelInSecond*dt)
 
     def change_fuel(self, diff):
