@@ -1,3 +1,4 @@
+from entityes.ThrusterExhaust import ThrusterExhaust
 from fwk.game.entity import GameEntity
 from fwk.ui.console import GAME_CONSOLE
 
@@ -14,6 +15,16 @@ class Spaceship(GameEntity, GameEntity.mixin.Sprite, GameEntity.mixin.CameraTarg
     def spawn(self):
         self.right_engine = False
         self.left_engine = False
+        self.thruster_exhaust = [
+            ThrusterExhaust.static_init(
+                game=self.game,
+                position=self.position),
+            ThrusterExhaust.static_init(
+                game=self.game,
+                position=self.position)]
+        # for future
+        self.health = 100
+        self.fuel = 100
 
     def handle_left_engine(self):
         pass # realized handle left engine
