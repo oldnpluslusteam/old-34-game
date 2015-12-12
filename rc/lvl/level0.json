@@ -3,7 +3,7 @@
 		{
 			"_class": "spaceship-entity",
 			"position": [0,0],
-			"sprite": "rc/img/64x64fg.png",
+			"sprite": "rc/img/256x256spaceship.png",
 			"spriteAnchor": "center",
 			"id": "player"
 		},

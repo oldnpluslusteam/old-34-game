@@ -1,0 +1,25 @@
+{
+    "off": [
+        {
+            "img": "rc/img/256x256thrusterExhaust_left.png",
+            "t": 666,
+            "anchor": "center",
+            "rect": {
+                "bottom": 0,
+                "left": 0,
+                "width": 1,
+                "height": 1
+            }
+        }
+    ],
+    "on": [
+        {
+            "img": "rc/img/256x256thrusterExhaust_left.png",
+            "t": 666,
+            "anchor": "center",
+            "transform": {
+                "flip_x": true
+            }
+        }
+    ]
+}
