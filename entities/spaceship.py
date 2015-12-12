@@ -14,7 +14,7 @@ class Spaceship(GameEntity,
                 SmallEntity):
 
     _standardAngleVelocity = 100
-    _standardVelocity = 100
+    _standardVelocity = 300
 
     def hitBig(self, entity):
         GAME_CONSOLE.write("DIED!!!")
@@ -45,8 +45,9 @@ class Spaceship(GameEntity,
         # for future
         # self.health = 100
         self.fuel = 100.0
-        self.fuelInSecond = 10.0
+        self.fuelInSecond = 1.0
         self.mass = 3.0
+        self.inertion = 0.9
 
     def handle_velocity(self, vector):
         self.velocity = (vector[0]*self._standardVelocity, vector[1]*self._standardVelocity)

@@ -12,7 +12,9 @@ class Trash(GameEntity,
             StandardSpaceEntity,
             SmallEntity):
 
-    _resource = random.randint(10, 20)
+    def spawn(self):
+        self._resource = random.randint(10, 20)
+        self.sprite = 'rc/img/32x32fg.png'
 
     def getResource(self):
         print("getResources")

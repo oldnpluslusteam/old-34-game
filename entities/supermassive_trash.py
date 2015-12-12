@@ -8,16 +8,7 @@ from fwk.game.entity import GameEntity
 class SupermassiveTrash(GameEntity,
                         GameEntity.mixin.Sprite,
                         BigEntity):
-
-    @staticmethod
-    def static_init(game, position, sprite, radius, mass):
-        self = SupermassiveTrash()
-        game.addEntity(self)
-        self.position = position
-        self.sprite = sprite
-
-        # for future changes
-        self.radius = radius
-        self.mass = mass
-
-        return self
+    def spawn(self):
+        self.radius = 64
+        self.mass = 10
+        self.sprite = 'rc/img/64x64fg.png'
