@@ -33,6 +33,8 @@ class Spaceship(GameEntity, GameEntity.mixin.Sprite, GameEntity.mixin.CameraTarg
     def stop_right_engine(self):
         pass # realized when stop right engine (rotation velocity)
 
+    # place for handle physic events
+
     def update(self, dt):
         if (self.left_engine):
             self.handle_left_engine()
