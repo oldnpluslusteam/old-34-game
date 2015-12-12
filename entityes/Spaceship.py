@@ -1,9 +1,14 @@
+from entityes.SpaceEntity import StandardSpaceEntity
 from fwk.game.entity import GameEntity
 from fwk.ui.console import GAME_CONSOLE
 
 
 @GameEntity.defineClass("spaceship-entity")
-class Spaceship(GameEntity, GameEntity.mixin.Sprite, GameEntity.mixin.CameraTarget, GameEntity.mixin.Movement):
+class Spaceship(GameEntity,
+                GameEntity.mixin.Sprite,
+                GameEntity.mixin.CameraTarget,
+                GameEntity.mixin.Movement,
+                StandardSpaceEntity):
     # time_for_full_velocity = 3.0
     # full_velocity = 150
     #
