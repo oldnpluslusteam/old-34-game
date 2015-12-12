@@ -20,31 +20,33 @@ from entities import meteorite, spaceship, supermassive_meteorite
 
 from fwk.util.all import *
 
-@GameEntity.defineClass('test-entity')
-class TestEntity(GameEntity,GameEntity.mixin.Animation,GameEntity.mixin.Movement):
-	def spawn(self):
-		self.angularVelocity = 100
-		self.i = 0
-		self.think()
+# @GameEntity.defineClass('test-entity')
+# class TestEntity(GameEntity,GameEntity.mixin.Animation,GameEntity.mixin.Movement):
+# 	def spawn(self):
+# 		self.angularVelocity = 100
+# 		self.i = 0
+# 		self.think()
+#
+# 	def think(self):
+# 		if self.i > 10:
+# 			return self.destroy()
+# 		self.game.scheduleAfter(1.0,self.think)
+# 		self.position = (self.i*10 % 40,-self.i*20 % 50)
+# 		self.velocity = (self.i*2353 % 100 - 50,-self.i*5423 % 110 - 55)
+# 		self.i += 1
+#
+# @GameEntity.defineClass('test-player')
+# class TestPlayer(GameEntity,GameEntity.mixin.Sprite,GameEntity.mixin.CameraTarget,GameEntity.mixin.Movement):
+# 	pass
 
-	def think(self):
-		if self.i > 10:
-			return self.destroy()
-		self.game.scheduleAfter(1.0,self.think)
-		self.position = (self.i*10 % 40,-self.i*20 % 50)
-		self.velocity = (self.i*2353 % 100 - 50,-self.i*5423 % 110 - 55)
-		self.i += 1
+# @GameEntity.defineClass('static-entity')
+# class StaticEntity(GameEntity,GameEntity.mixin.Sprite):
+# 	'''
+# 	Просто статическая спрайтовая сущность с нестандартным z-индексом.
+# 	'''
+# 	z_index = -1
+from ui.progress_bar import ProgressBar
 
-@GameEntity.defineClass('test-player')
-class TestPlayer(GameEntity,GameEntity.mixin.Sprite,GameEntity.mixin.CameraTarget,GameEntity.mixin.Movement):
-	pass
-
-@GameEntity.defineClass('static-entity')
-class StaticEntity(GameEntity,GameEntity.mixin.Sprite):
-	'''
-	Просто статическая спрайтовая сущность с нестандартным z-индексом.
-	'''
-	z_index = -1
 
 class GameLayer(GameLayer_):
 	'''
@@ -100,6 +102,10 @@ class StartupScreen(Screen):
 		game.loadFromJSON('rc/lvl/level0.json')
 
 		self.pushLayerFront(GameLayer(game=game,camera=Camera()))
+
+		self.pushLayerFront(ProgressBar(grow_origin='top-left',
+			expression=lambda: game.getEntityById('player').fuel / 100.0,
+			layout=ProgressBar.LEFT_LAYOUT,player=game.getEntityById('player')))
 
 		# ssound.Preload('rc/snd/1.wav',['alias0'])
         #

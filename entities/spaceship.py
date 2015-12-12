@@ -38,8 +38,9 @@ class Spaceship(GameEntity,
                 game=self.game,
                 position=self.position)]
         # for future
-        self.health = 100
-        self.fuel = 100
+        # self.health = 100
+        self.fuel = 100.0
+        self.fuelInSecond = 10.0
         self.mass = 3.0
 
     def handle_velocity(self, vector):
@@ -48,10 +49,12 @@ class Spaceship(GameEntity,
     def handle_left_engine(self, dt = 0):
         self.angularVelocity += self._standardAngleVelocity*dt
         self.handle_velocity(directionFromAngle(self.rotation))
+        self.fuel -= self.fuelInSecond*dt
 
     def handle_right_engine(self, dt = 0):
         self.angularVelocity -= self._standardAngleVelocity*dt
         self.handle_velocity(directionFromAngle(self.rotation))
+        self.fuel -= self.fuelInSecond*dt
 
     # place for handle physic events
 
