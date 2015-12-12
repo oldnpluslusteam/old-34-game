@@ -21,7 +21,7 @@ class Spaceship(GameEntity,
 
     def hitSmall(self, entity):
         if (entity != self):
-            self.fuel += entity.getResource()
+            self.change_fuel(entity.getResource())
 
     # time_for_full_velocity = 3.0
     # full_velocity = 150
@@ -54,14 +54,19 @@ class Spaceship(GameEntity,
     def handle_left_engine(self, dt = 0):
         self.angularVelocity += self._standardAngleVelocity*dt
         self.handle_velocity(directionFromAngle(self.rotation))
-        self.fuel -= self.fuelInSecond*dt
+        self.change_fuel(-self.fuelInSecond*dt)
 
     def handle_right_engine(self, dt = 0):
         self.angularVelocity -= self._standardAngleVelocity*dt
         self.handle_velocity(directionFromAngle(self.rotation))
-        self.fuel -= self.fuelInSecond*dt
+        self.change_fuel(-self.fuelInSecond*dt)
 
-    # place for handle physic events
+    def change_fuel(self, diff):
+        self.fuel += diff
+        if (self.fuel < 0):
+            self.fuel = 0
+        if (self.fuel > 100):
+            self.fuel = 100
 
     def update(self, dt):
         if (self._left_engine and self.fuel > 0):
