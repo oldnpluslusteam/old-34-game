@@ -69,8 +69,8 @@ class GameLayer(GameLayer_):
 				fn(True)
 
 	def on_key_release(self, key, mod):
-		k = GameLayer.__KEYMAP[key]
 		if key in GameLayer.__KEYMAP:
+			k = GameLayer.__KEYMAP[key]
 			fn = getattr(self._player, k["action"])
 			if fn is not None:
 				fn(False)
