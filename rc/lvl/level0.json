@@ -52,10 +52,11 @@
 		},
 		{
 			"_class": "supermassive-trash-entity",
-			"position": [-700,-1000],
+			"position": [-300,-500],
 			"sprite": "rc/img/64x64fg.png",
 			"spriteAnchor": "center",
-			"radius": 64
+			"radius": 64,
+			"mass": 5.0
 		}
 	]
 }

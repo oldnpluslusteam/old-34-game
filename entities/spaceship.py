@@ -76,8 +76,6 @@ class Spaceship(GameEntity,
 
     def set_right_thruster(self, is_enabled):
         self._right_engine = is_enabled
-        GAME_CONSOLE.write("Right thruster is: " + ("On" if is_enabled else "Off"))
 
     def set_left_thruster(self, is_enabled):
         self._left_engine = is_enabled
-        GAME_CONSOLE.write("Left thruster is: " + ("On" if is_enabled else "Off"))
