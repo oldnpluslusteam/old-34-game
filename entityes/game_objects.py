@@ -15,6 +15,10 @@ class Spaceship(GameEntity, GameEntity.mixin.Sprite, GameEntity.mixin.CameraTarg
         return sin(x)
 
     def update(self, dt):
-        print(dt)
-        self.x += dt
-        self.velocity = (dt*self.standardVelocity, self.y(self.x))
+        self.velocity = (dt*self.standardVelocity, self.y(dt))
+
+@GameEntity.defineClass("meteorite-entity")
+class Meteorite(GameEntity, GameEntity.mixin.Sprite, GameEntity.mixin.CameraTarget, GameEntity.mixin.Movement):
+
+    def spawn(self):
+        pass
