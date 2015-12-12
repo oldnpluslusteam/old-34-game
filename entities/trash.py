@@ -1,4 +1,4 @@
-from entityes.SpaceEntity import StandardSpaceEntity
+from entities.space_entity import StandardSpaceEntity
 from fwk.game.entity import GameEntity
 from fwk.ui.console import GAME_CONSOLE
 

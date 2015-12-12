@@ -1,6 +1,6 @@
 import random
 
-from entityes.SpaceEntity import StandardSpaceEntity
+from entities.space_entity import StandardSpaceEntity
 from fwk.game.entity import GameEntity
 
 

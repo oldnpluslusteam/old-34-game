@@ -1,5 +1,5 @@
-from entityes.SpaceEntity import StandardSpaceEntity
-from entityes.ThrusterExhaust import ThrusterExhaust
+from entities.space_entity import StandardSpaceEntity
+from entities.thruster_exhaust import ThrusterExhaust
 from fwk.game.entity import GameEntity
 from fwk.ui.console import GAME_CONSOLE
 
@@ -10,6 +10,9 @@ class Spaceship(GameEntity,
                 GameEntity.mixin.CameraTarget,
                 GameEntity.mixin.Movement,
                 StandardSpaceEntity):
+
+
+
     # time_for_full_velocity = 3.0
     # full_velocity = 150
     #
