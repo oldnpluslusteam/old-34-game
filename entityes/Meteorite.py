@@ -1,3 +1,5 @@
+import random
+
 from fwk.game.entity import GameEntity
 
 
@@ -6,3 +8,6 @@ class Meteorite(GameEntity, GameEntity.mixin.Sprite, GameEntity.mixin.CameraTarg
 
     def spawn(self):
         pass
+
+    def generateVelocityAndAngle(self, angle = {'start':0, 'end':0}, velocity = {'start':0, 'end':0}):
+        pass # handle start angle and velocity
