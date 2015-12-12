@@ -16,7 +16,7 @@ _REGENERATE_INTERVAL = 5.0
 
 _GENERATION_DISTRIBUTION = {
 	'supermassive-trash-entity': {
-		'density': 0.5 # Things per 1024x1024 units
+		'density': 2.0 # Things per 1024x1024 units
 	},
 	'trash-entity': {
 		'density': 10.0

@@ -23,7 +23,7 @@ from entities import meteorite, spaceship, supermassive_meteorite, trash, superm
 from fwk.util.all import *
 
 from ui.progress_bar import ProgressBar
-
+from ui.dynamic_bg import DynamicBG
 
 class GameLayer(GameLayer_):
 	'''
@@ -36,7 +36,7 @@ class GameLayer(GameLayer_):
 	def init(self,*args,**kwargs):
 		self._player = self._game.getEntityById('player')
 		self._camera.setController(self._player)
-		# self._camera.scale = 0.1
+		# self._camera.scale = 0.3
 
 	def on_key_press(self,key,mod):
 		'''
@@ -78,6 +78,8 @@ class StartupScreen(Screen):
 		game = DynamicGame()
 
 		game.loadFromJSON('rc/lvl/level0.json')
+
+		self.pushLayerFront(DynamicBG(game.getEntityById('player')))
 
 		self.pushLayerFront(GameLayer(game=game,camera=Camera()))
 
