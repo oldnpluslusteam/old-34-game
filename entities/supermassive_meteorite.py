@@ -7,7 +7,6 @@ from fwk.game.entity import GameEntity
 class Meteorite(GameEntity,
                 GameEntity.mixin.Sprite,
                 GameEntity.mixin.CameraTarget,
-                GameEntity.mixin.Movement,
                 StandardSpaceEntity,
                 BigEntity):
     pass

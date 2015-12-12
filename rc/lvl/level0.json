@@ -8,6 +8,18 @@
 			"id": "player"
 		},
 		{
+			"_class": "meteorite-entity",
+			"position": [100,100],
+			"sprite": "rc/img/32x32fg.png",
+			"spriteAnchor": "center"
+		},
+		{
+			"_class": "supermass-meteorite-entity",
+			"position": [320,320],
+			"sprite": "rc/img/64x64fg.png",
+			"spriteAnchor": "center"
+		},
+		{
 			"_class": "static-entity",
 			"sprite": "rc/img/256x256bg.png",
 			"spriteAnchor": "center"
