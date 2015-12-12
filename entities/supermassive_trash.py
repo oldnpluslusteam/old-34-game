@@ -1,13 +1,17 @@
+from entities.physical import BigEntity
+
 __author__ = 'moardm'
 from fwk.game.entity import GameEntity
 
 
-@GameEntity.defineClass("supermassive-garbage-entity")
-class SupermassiveGarbage(GameEntity, GameEntity.mixin.Sprite):
+@GameEntity.defineClass("supermassive-trash-entity")
+class SupermassiveTrash(GameEntity,
+                        GameEntity.mixin.Sprite,
+                        BigEntity):
 
     @staticmethod
     def static_init(game, position, sprite, radius, mass):
-        self = SupermassiveGarbage()
+        self = SupermassiveTrash()
         game.addEntity(self)
         self.position = position
         self.sprite = sprite

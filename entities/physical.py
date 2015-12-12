@@ -54,7 +54,7 @@ class SmallEntity(GameEntity.mixin.Movement):
 		self._checkCollisionToPlayer()
 
 	def _checkCollisionToPlayer(self):
-		player = self.getEntityById('player')
+		player = self.game.getEntityById('player')
 
 		if not player:
 			return

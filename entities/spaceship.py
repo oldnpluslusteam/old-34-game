@@ -1,3 +1,4 @@
+from entities.physical import SmallEntity
 from entities.space_entity import StandardSpaceEntity
 from entities.thruster_exhaust import ThrusterExhaust
 from fwk.game.entity import GameEntity
@@ -8,8 +9,8 @@ from fwk.ui.console import GAME_CONSOLE
 class Spaceship(GameEntity,
                 GameEntity.mixin.Sprite,
                 GameEntity.mixin.CameraTarget,
-                GameEntity.mixin.Movement,
-                StandardSpaceEntity):
+                StandardSpaceEntity,
+                SmallEntity):
 
 
 

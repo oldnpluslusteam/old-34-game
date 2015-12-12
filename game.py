@@ -55,7 +55,7 @@ class GameLayer(GameLayer_):
 		KEY.LCTRL: {"action": "set_left_thruster"}
 	}
 	def init(self,*args,**kwargs):
-		self._player = self._game.getEntityById('player_spaceship')
+		self._player = self._game.getEntityById('player')
 		self._camera.setController(self._player)
 
 	def on_key_press(self,key,mod):
@@ -84,7 +84,7 @@ class GameLayer(GameLayer_):
 
 	def draw(self):
 		GameLayer_.draw(self)
-		tep = self._camera.project(self._game.getEntityById('test0').position)
+		tep = self._camera.project(self._game.getEntityById('player').position)
 		DrawWireframeRect(Rect(left=tep[0],bottom=tep[1],width=100,height=100))
 
 
