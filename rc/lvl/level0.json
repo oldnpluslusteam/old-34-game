@@ -4,15 +4,18 @@
 			"_class": "test-entity",
 			"position": [100,253],
 			"animations": "rc/ani/test.json",
-			"animation": "default"
-		},
-		{
-			"_class": "test-entity",
-			"position": [100,253],
-			"animations": "rc/ani/test.json",
 			"animation": "non-default",
 			"i": -20,
 			"id": "test0"
+		},
+		{
+			"_class": "spaceship-entity",
+			"position": [0,0],
+			"sprite": "rc/img/64x64fg.png",
+			"animations": "rc/ani/test.json",
+			"animation": "non-default",
+			"i": -20,
+			"id": "test1"
 		},
 		{
 			"_class": "test-player",
