@@ -3,6 +3,7 @@ from entities.space_entity import StandardSpaceEntity
 from entities.thruster_exhaust import ThrusterExhaust
 from fwk.game.entity import GameEntity
 from fwk.ui.console import GAME_CONSOLE
+from fwk.util.geometry import directionFromAngle
 
 
 @GameEntity.defineClass("spaceship-entity")
@@ -13,6 +14,11 @@ class Spaceship(GameEntity,
                 SmallEntity):
 
     _standardAngleVelocity = 100
+    _standardVelocity = 100
+
+    def hitBig(self, entity):
+        self.health = 0
+        GAME_CONSOLE.write("health=0")
 
     # time_for_full_velocity = 3.0
     # full_velocity = 150
@@ -34,12 +40,18 @@ class Spaceship(GameEntity,
         # for future
         self.health = 100
         self.fuel = 100
+        self.mass = 3.0
+
+    def handle_velocity(self, vector):
+        self.velocity = (vector[0]*self._standardVelocity, vector[1]*self._standardVelocity)
 
     def handle_left_engine(self, dt = 0):
         self.angularVelocity += self._standardAngleVelocity*dt
+        self.handle_velocity(directionFromAngle(self.rotation))
 
     def handle_right_engine(self, dt = 0):
         self.angularVelocity -= self._standardAngleVelocity*dt
+        self.handle_velocity(directionFromAngle(self.rotation))
 
     # place for handle physic events
 

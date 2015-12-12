@@ -16,7 +16,7 @@ from fwk.game.camera import Camera
 
 import fwk.sound.static as ssound
 import fwk.sound.music as music
-from entities import meteorite, spaceship
+from entities import meteorite, spaceship, supermassive_meteorite
 
 from fwk.util.all import *
 
