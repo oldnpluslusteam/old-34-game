@@ -10,13 +10,13 @@ import entities.supermassive_trash
 import entities.trash
 
 _INITIAL_CLEAR_SPACE = 256
-_FAR_BORDERLINE = 1000
-_NEAR_BORDERLINE = 800
+_FAR_BORDERLINE = 1500
+_NEAR_BORDERLINE = 1000
 _REGENERATE_INTERVAL = 5.0
 
 _GENERATION_DISTRIBUTION = {
 	'supermassive-trash-entity': {
-		'density': 2.0 # Things per 1024x1024 units
+		'density': 0.5 # Things per 1024x1024 units
 	},
 	'trash-entity': {
 		'density': 10.0
@@ -36,12 +36,18 @@ class DynamicGame(Game):
 
 	def initialGenerate(self):
 		self._generate(_INITIAL_CLEAR_SPACE, _FAR_BORDERLINE)
-		self.scheduleAfter(_REGENERATE_INTERVAL, self.periodicGenerate)
+		self._prev_pp = (0,0)
+		# self.scheduleAfter(_REGENERATE_INTERVAL, self.periodicGenerate)
 
 	def periodicGenerate(self):
 		self._killFar(_NEAR_BORDERLINE)
 		self._generate(_NEAR_BORDERLINE, _FAR_BORDERLINE)
-		self.scheduleAfter(_REGENERATE_INTERVAL, self.periodicGenerate)
+		self._prev_pp = self.player_pos
+		# self.scheduleAfter(_REGENERATE_INTERVAL, self.periodicGenerate)
+
+	def update(self, dt):
+		if not_in_square(self._prev_pp, _NEAR_BORDERLINE, self.player_pos):
+			self.periodicGenerate()
 
 	@property
 	def player_pos(self):
