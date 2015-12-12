@@ -1,3 +1,5 @@
 *.pyc
 *.sublime-workspace
 */Thumbs.db
+.idea/
+.idea/*
