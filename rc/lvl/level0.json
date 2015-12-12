@@ -15,7 +15,7 @@
 			"animations": "rc/ani/test.json",
 			"animation": "non-default",
 			"i": -20,
-			"id": "test1"
+			"id": "player_spaceship"
 		},
 		{
 			"_class": "test-player",
