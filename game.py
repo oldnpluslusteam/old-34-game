@@ -50,24 +50,37 @@ class GameLayer(GameLayer_):
 	'''
 	Наследник игрового слоя.
 	'''
+	__KEYMAP = {
+		KEY.RCTRL: {"action": "set_right_thruster"},
+		KEY.LCTRL: {"action": "set_left_thruster"}
+	}
 	def init(self,*args,**kwargs):
-		self._player = self._game.getEntityById('player')
+		self._player = self._game.getEntityById('player_spaceship')
 		self._camera.setController(self._player)
 
 	def on_key_press(self,key,mod):
 		'''
 		Здесь происходит управление с клавиатуры.
 		'''
-		if key == KEY.UP:
-			self._player.rotation += 20
-		if key == KEY.DOWN:
-			self._player.rotation -= 20
+		if key in GameLayer.__KEYMAP:
+			k = GameLayer.__KEYMAP[key]
+			fn = getattr(self._player, k["action"])
+			if fn is not None:
+				fn(True)
+
+	def on_key_release(self, key, mod):
+		k = GameLayer.__KEYMAP[key]
+		if key in GameLayer.__KEYMAP:
+			fn = getattr(self._player, k["action"])
+			if fn is not None:
+				fn(False)
+
 
 	def on_mouse_press(self,x,y,b,mod):
 		'''
 		Управление с мыши.
 		'''
-		self._player.position = self._camera.unproject((x,y))
+		self._player.position = self._camera.unproject((x, y))
 
 	def draw(self):
 		GameLayer_.draw(self)

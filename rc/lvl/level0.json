@@ -14,8 +14,8 @@
 			"sprite": "rc/img/64x64fg.png",
 			"animations": "rc/ani/test.json",
 			"animation": "non-default",
-			"id": "test1",
-			"i": -20
+			"i": -20,
+			"id": "player_spaceship"
 		},
 		{
 			"_class": "test-player",
