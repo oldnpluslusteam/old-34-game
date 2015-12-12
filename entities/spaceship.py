@@ -17,8 +17,11 @@ class Spaceship(GameEntity,
     _standardVelocity = 100
 
     def hitBig(self, entity):
-        self.health = 0
-        GAME_CONSOLE.write("health=0")
+        GAME_CONSOLE.write("DIED!!!")
+
+    def hitSmall(self, entity):
+        if (entity != self):
+            self.fuel += entity.getResource()
 
     # time_for_full_velocity = 3.0
     # full_velocity = 150
@@ -61,9 +64,9 @@ class Spaceship(GameEntity,
     # place for handle physic events
 
     def update(self, dt):
-        if (self._left_engine):
+        if (self._left_engine and self.fuel > 0):
             self.handle_left_engine(dt)
-        if (self._right_engine):
+        if (self._right_engine and self.fuel > 0):
             self.handle_right_engine(dt)
 
     def set_right_thruster(self, is_enabled):
