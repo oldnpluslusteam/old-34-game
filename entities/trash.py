@@ -31,6 +31,7 @@ class Trash(GameEntity,
         self.sprite = 'rc/img/' + self.trashImgs[random.randint(0, len(self.trashImgs)-1)]
         self.sprite.width = self.radius*2
         self.sprite.height = self.radius*2
+        self.spriteAnchor = "center"
 
 
     def getResource(self):

@@ -25,3 +25,4 @@ class SupermassiveTrash(GameEntity,
         self.sprite = 'rc/img/' + self.supermassive_trash_imgs[random.randint(0, len(self.supermassive_trash_imgs)-1)]
         self.sprite.width = self.radius*2
         self.sprite.height = self.radius*2
+        self.spriteAnchor = "center"
