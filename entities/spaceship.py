@@ -40,15 +40,16 @@ class Spaceship(GameEntity,
     def spawn(self):
         self._right_engine = False
         self._left_engine = False
-        thruster_exhaust_left = ThrusterExhaust()
-        thruster_exhaust_left.parent = self
-        self.game.addEntity(thruster_exhaust_left)
-        thruster_exhaust_left.animations = "rc/ani/TE_left.json"
-        thruster_exhaust_right = ThrusterExhaust()
-        thruster_exhaust_right.parent = self
-        self.game.addEntity(thruster_exhaust_right)
-        thruster_exhaust_right.animations = "rc/ani/TE_right.json"
-        self.thruster_exhaust = [thruster_exhaust_left, thruster_exhaust_right]
+
+        self.thruster_exhaust_left = ThrusterExhaust()
+        self.thruster_exhaust_left.parent = self
+        self.game.addEntity(self.thruster_exhaust_left)
+        self.thruster_exhaust_left.animations = "rc/ani/TE_left.json"
+
+        self.thruster_exhaust_right = ThrusterExhaust()
+        self.thruster_exhaust_right.parent = self
+        self.game.addEntity(self.thruster_exhaust_right)
+        self.thruster_exhaust_right.animations = "rc/ani/TE_right.json"
         # for future
         # self.health = 100
 
@@ -81,6 +82,12 @@ class Spaceship(GameEntity,
 
     def set_right_thruster(self, is_enabled):
         self._right_engine = is_enabled
+        state = "on" if is_enabled else "off"
+        self.thruster_exhaust_right.animation = state
+        GAME_CONSOLE.write("Right thruster is: " + state)
 
     def set_left_thruster(self, is_enabled):
         self._left_engine = is_enabled
+        state = "on" if is_enabled else "off"
+        self.thruster_exhaust_left.animation = state
+        GAME_CONSOLE.write("Left thruster is: " + state)
