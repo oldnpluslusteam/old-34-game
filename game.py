@@ -94,13 +94,19 @@ class GameLayer(GameLayer_):
 	Наследник игрового слоя.
 	'''
 
+	background_player = 0
+
 	__KEYMAP = {
 		KEY.RCTRL: {"action": "right_thruster"},
 		KEY.LCTRL: {"action": "left_thruster"},
 		KEY.P: {"action": "pause"}
 	}
 	def init(self,*args,**kwargs):
-		music.Play("rc/snd/background.ogg")
+		# if self.background_player == 0:
+		# 	self.background_player = static.Play("rc/snd/background.wav")
+		# 	self.background_player.eos_action = self.background_player.EOS_LOOP
+		# else:
+		# 	self.background_player.play()
 		print "Inited"
 		self._player = self._game.getEntityById('player')
 		self._camera.setController(self._player)
@@ -149,6 +155,9 @@ class GameLayer(GameLayer_):
 		games_screen = self.screen
 		games_screen.next = Screen.new("PAUSE")
 
+	# def hide(self,hide=True):
+	# 	self.background_player.pause()
+
 @Screen.ScreenClass('GAME')
 class GameScreen(Screen):
 	def init(self,level_data=level0_data,*args,**kwargs):
@@ -159,6 +168,7 @@ class GameScreen(Screen):
 		game.on('teleport-player', self.onNextLevel)
 		game.loadFromJSON('rc/lvl/level0.json')
 		self.game = game
+		self.game.on("hitBig", self.foo)
 
 		self.pushLayerFront(DynamicBG(game.getEntityById('player'), self._ld['bg']))
 		self.game_layer = GameLayer(game=game, camera=Camera())
@@ -175,16 +185,22 @@ class GameScreen(Screen):
 			layout={'width': 256, 'height': 50, 'right': 20, 'top': 20},
 			text="Pause <P>"))
 
+	def foo(self):
+		GAME_CONSOLE.write('your died!')
+		self.next = Screen.new('DEATHSCREEN')
+
+	def win(self):
+		GAME_CONSOLE.write('you are won!')
+		self.next = Screen.new('WIN')
+
 	def onNextLevel(self):
 		if self._ld['next_data'] is not None:
 			self.next = GameScreen(self._ld['next_data'])
 		else:
-			GAME_CONSOLE.write('End!')
-			self.next = Screen.new('END')
+			self.win()
 
 	def on_show(self):
 		self.game_layer.listen("update")
-
 
 	def on_key_press(self,key,mod):
 		pass#GAME_CONSOLE.write('SSC:Key down:',KEY.symbol_string(key),'(',key,') [+',KEY.modifiers_string(mod),']')
@@ -224,29 +240,29 @@ class PauseScreen(Screen):
 @Screen.ScreenClass('DEATHSCREEN')
 class DeathScreen(Screen):
 	def init(self):
-		self.pushLayerFront(StaticBackgroundLauer('rc/img/kxk-stars-bg.png', mode='fill'))
+		self.pushLayerFront(StaticBackgroundLauer('rc/img/1600x1200bg_2.png', mode='fill'))
 
 		self.pushLayerFront(GUITextItem(
 			layout={'width': 256, 'height': 50, 'top': 200},
 			text="You have died"))
 		self.pushLayerFront(Button(
-			onclick=self.new_game(),
+			onclick=self.new_game,
 			layout={'width': 256, 'height': 50, 'top': 300},
 			text="Next time..."))
 
 	def new_game(self, *args):
 		self.next = Screen.new('STARTUP')
 
-@Screen.ScreenClass('END')
-class EndScreen(Screen):
+@Screen.ScreenClass('WIN')
+class WinScreen(Screen):
 	def init(self):
-		self.pushLayerFront(StaticBackgroundLauer('rc/img/kxk-stars-bg.png', mode='fill'))
+		self.pushLayerFront(StaticBackgroundLauer('rc/img/1600x1200bg.png', mode='fill'))
 
 		self.pushLayerFront(GUITextItem(
 			layout={'width': 256, 'height': 50, 'top': 200},
 			text="You have won"))
 		self.pushLayerFront(Button(
-			onclick=self.new_game(),
+			onclick=self.new_game,
 			layout={'width': 256, 'height': 50, 'top': 300},
 			text="GOTCHA"))
 
@@ -256,7 +272,7 @@ class EndScreen(Screen):
 @Screen.ScreenClass('STARTUP')
 class StartupScreen(Screen):
 	def init(self):
-		self.pushLayerFront(StaticBackgroundLauer('rc/img/kosmo_1.png', mode='fill'))
+		self.pushLayerFront(StaticBackgroundLauer('rc/img/1600x1200bg_2.png', mode='fill'))
 
 		self.pushLayerFront(Button(
 			onclick=self.new_game,

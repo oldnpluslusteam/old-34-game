@@ -24,7 +24,8 @@ def not_in_square(sqCenter, sqRadius, point):
 
 class DynamicGame(Game):
 	events = [
-		'teleport-player'
+		'teleport-player',
+		'hitBig'
 	]
 
 	def __init__(self,level_data):
