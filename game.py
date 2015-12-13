@@ -84,7 +84,7 @@ class StartupScreen(Screen):
 		self.pushLayerFront(GameLayer(game=game,camera=Camera()))
 
 		self.pushLayerFront(ProgressBar(grow_origin='top-left',
-			expression=lambda: game.getEntityById('player').fuel / 100.0,
+			expression=lambda: game.getEntityById('player')._fuel / 100.0,
 			layout=ProgressBar.LEFT_LAYOUT,player=game.getEntityById('player')))
 
 		# ssound.Preload('rc/snd/1.wav',['alias0'])

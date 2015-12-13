@@ -12,12 +12,15 @@ class Trash(GameEntity,
             StandardSpaceEntity,
             SmallEntity):
 
+    _maxResource = 30
+    _minResource = 1
+
     def spawn(self):
-        self._resource = random.randint(10, 20)
+        self._resource = random.randint(self._minResource, self._maxResource)
         self.sprite = 'rc/img/32x32fg.png'
 
     def getResource(self):
-        print("getResources")
+        # print("getResources")
         res = self._resource
         self._resource = 0
         self.game.scheduleAfter(0, self.event('destroy'))

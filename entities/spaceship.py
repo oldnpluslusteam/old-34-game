@@ -13,11 +13,16 @@ class Spaceship(GameEntity,
                 StandardSpaceEntity,
                 SmallEntity):
 
-    _standardAngleVelocity = 10
-    _standardVelocity = 1
+    _standardAngleVelocity = 70
+    _standardVelocity = 715
+
+    _fuel = 100.0
+    _fuelInSecond = 4.0
+    _mass = 3.0
+    _inertion = 0.9
 
     def hitBig(self, entity):
-        GAME_CONSOLE.write("DIED!!!")
+        pass
 
     def hitSmall(self, entity):
         if (entity != self):
@@ -44,36 +49,32 @@ class Spaceship(GameEntity,
         self.thruster_exhaust = [thruster_exhaust_left, thruster_exhaust_right]
         # for future
         # self.health = 100
-        self.fuel = 100.0
-        self.fuelInSecond = 1.0
-        self.mass = 3.0
-        self.inertion = 0.9
 
     def handle_velocity(self, vector, dt):
         v = self.velocity
-        self.velocity = v[0] + vector[0]*self._standardVelocity, v[1] + vector[1]*self._standardVelocity
+        self.velocity = v[0] + vector[0]*self._standardVelocity*dt, v[1] + vector[1]*self._standardVelocity*dt
 
     def handle_left_engine(self, dt):
         self.angularVelocity += self._standardAngleVelocity*dt
         self.handle_velocity(directionFromAngle(self.rotation), dt)
-        self.change_fuel(-self.fuelInSecond*dt)
+        self.change_fuel(-self._fuelInSecond*dt)
 
     def handle_right_engine(self, dt):
         self.angularVelocity -= self._standardAngleVelocity*dt
         self.handle_velocity(directionFromAngle(self.rotation), dt)
-        self.change_fuel(-self.fuelInSecond*dt)
+        self.change_fuel(-self._fuelInSecond*dt)
 
     def change_fuel(self, diff):
-        self.fuel += diff
-        if (self.fuel < 0):
-            self.fuel = 0
-        if (self.fuel > 100):
-            self.fuel = 100
+        self._fuel += diff
+        if (self._fuel < 0):
+            self._fuel = 0
+        if (self._fuel > 100):
+            self._fuel = 100
 
     def update(self, dt):
-        if (self._left_engine and self.fuel > 0):
+        if (self._left_engine and self._fuel > 0):
             self.handle_left_engine(dt)
-        if (self._right_engine and self.fuel > 0):
+        if (self._right_engine and self._fuel > 0):
             self.handle_right_engine(dt)
 
     def set_right_thruster(self, is_enabled):

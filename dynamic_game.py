@@ -10,8 +10,8 @@ import entities.supermassive_trash
 import entities.trash
 
 _INITIAL_CLEAR_SPACE = 256
-_FAR_BORDERLINE = 1500
-_NEAR_BORDERLINE = 1000
+_FAR_BORDERLINE = 1700
+_NEAR_BORDERLINE = 1500
 _REGENERATE_INTERVAL = 5.0
 
 _GENERATION_DISTRIBUTION = {
@@ -61,7 +61,7 @@ class DynamicGame(Game):
 		for cls, params in _GENERATION_DISTRIBUTION.items():
 			clz = GameEntity.getClass(cls)
 			amount = int(params['density'] * maxDistance * maxDistance / (1024*1024))
-			GAME_CONSOLE.write('Amount of ', cls, ' is ', amount)
+			# GAME_CONSOLE.write('Amount of ', cls, ' is ', amount)
 			for _ in range(amount):
 				pos = random.uniform(pmin[0], pmax[0]), random.uniform(pmin[1], pmax[1])
 				if not_in_square(playerPos, minDistance, pos):
@@ -70,7 +70,7 @@ class DynamicGame(Game):
 					self.setEntityTags(ent, 'dynamic')
 					ent.position = pos
 
-		GAME_CONSOLE.write('Generate complete!')
+		# GAME_CONSOLE.write('Generate complete!')
 
 	def _killFar(self, minDistance):
 		playerPos = self.player_pos
@@ -82,4 +82,4 @@ class DynamicGame(Game):
 			if not_in_square(playerPos, minDistance, ent.position):
 				ent.destroy()
 				n += 1
-		GAME_CONSOLE.write('killed ', n)
+		# GAME_CONSOLE.write('killed ', n)
