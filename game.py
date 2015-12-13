@@ -6,7 +6,7 @@ from fwk.ui.console import GAME_CONSOLE
 
 from fwk.ui.layers.staticBg import StaticBackgroundLauer
 from fwk.ui.layers.guiItem import GUIItemLayer
-from fwk.ui.layers.guitextitem import GUITextItem
+from fwk.ui.layers.guitextitem import GUITextItem as GUITextItem_
 from fwk.ui.layers.gameLayer import GameLayer as GameLayer_
 from fwk.ui.layers.texture9TileItem import *
 
@@ -27,6 +27,9 @@ from ui.progress_bar import ProgressBar
 from ui.dynamic_bg import DynamicBG
 from ui.button import Button
 
+class GUITextItem(GUITextItem_):
+	def draw(self):
+		self._label.draw()
 
 def level2_data():
 	return {
