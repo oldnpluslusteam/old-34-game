@@ -15,13 +15,14 @@ class SupermassiveTrash(GameEntity,
         "supermassive-trash1.png",
         "supermassive-trash2.png",
         "supermassive-trash3.png",
+        "supermassive-trash4.png",
         "trash4.png",
         "trash5.png"
     ]
 
     def spawn(self):
-        self.radius = random.randint(128, 256)
-        self.mass = 0.1*self.radius
+        self.radius = random.randint(82, 246)
+        self.mass = 0.3*self.radius
         self.sprite = 'rc/img/' + random.sample(self.supermassive_trash_imgs, 1)[0]
         targetScale = float(self.radius*2)/self.sprite.width
         self.scale = targetScale

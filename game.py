@@ -94,6 +94,7 @@ class GameLayer(GameLayer_):
 	}
 	def init(self,*args,**kwargs):
 		music.Play("rc/snd/background.mp3")
+		print "Inited"
 		self._player = self._game.getEntityById('player')
 		self._camera.setController(self._player)
 		self._camera.scale = 0.4
@@ -133,6 +134,14 @@ class GameLayer(GameLayer_):
 	def release_left_thruster(self, *args):
 		self._player.set_left_thruster(False)
 
+	def press_pause(self, *args):
+		pass
+
+	def release_pause(self, *args):
+		self.ignore('update')
+		games_screen = self.screen
+		games_screen.next = Screen.new("PAUSE")
+
 @Screen.ScreenClass('STARTUP')
 class StartupScreen(Screen):
 	def init(self, *args, **kwargs):
@@ -147,10 +156,11 @@ class GameScreen(Screen):
 		game = DynamicGame(level_data=self._ld)
 		game.on('teleport-player', self.onNextLevel)
 		game.loadFromJSON('rc/lvl/level0.json')
+		self.game = game
 
 		self.pushLayerFront(DynamicBG(game.getEntityById('player')))
-
-		self.pushLayerFront(GameLayer(game=game, camera=Camera()))
+		self.game_layer = GameLayer(game=game, camera=Camera())
+		self.pushLayerFront(self.game_layer)
 
 		fuel_progress_bar = ProgressBar(grow_origin='top-left',
 										expression=lambda: game.getEntityById('player')._fuel / 100.0,
@@ -166,6 +176,9 @@ class GameScreen(Screen):
 			GAME_CONSOLE.write('End!')
 			self.next = Screen.new('END')
 
+	def on_show(self):
+		self.game_layer.listen("update")
+
 
 	def on_key_press(self,key,mod):
 		pass#GAME_CONSOLE.write('SSC:Key down:',KEY.symbol_string(key),'(',key,') [+',KEY.modifiers_string(mod),']')
@@ -176,27 +189,29 @@ class EndScreen(Screen):
 
 @Screen.ScreenClass('PAUSE')
 class PauseScreen(Screen):
-
-
 	def init(self):
+		self.keep_prevous = True
 		self.pushLayerFront(StaticBackgroundLauer('rc/img/kxk-stars-bg.png', mode='fill'))
 
 		self.pushLayerFront(Button(
+			onclick=self.continue_game,
 			layout={'width': 256, 'height': 50, 'top': 200},
-			text="New Game",
-			onclick=self.new_game))
+			text="Continue"))
 		self.pushLayerFront(Button(
+			onclick=self.new_game,
 			layout={'width': 256, 'height': 50, 'top': 300},
-			text="Continue",
-			onclick=self.continue_game))
+			text="New Game"))
 		self.pushLayerFront(Button(
+			onclick=self.exit_game,
 			layout={'width': 256, 'height': 50, 'top': 400},
-			text="Exit",
-			onclick=self.exit_game))
+			text="Exit"))
 
-	def new_game(self):
-			self.next = StartupScreen()
-	def continue_game(self):
-			pass
-	def exit_game(self):
-			pass
+	def new_game(self, *args):
+		self.next = Screen.new('GAME')
+
+	def continue_game(self, *args):
+		self.next = self._prevous
+		self.next.trigger("show")
+
+	def exit_game(self, *args):
+		exit()

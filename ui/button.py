@@ -1,9 +1,9 @@
 __author__ = 'moardm'
 
-from fwk.ui.layers.guiItem import GUIItemLayer
+from fwk.ui.layers.guitextitem import GUITextItem
 
 
-class Button(GUIItemLayer):
+class Button(GUITextItem):
 
-    def init(self, layout, onclick, **kwargs):
-        self.on_click = onclick
+    def init(self, onclick, *args, **kwargs):
+        self.on('ui:click', onclick)
