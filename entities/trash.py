@@ -38,6 +38,9 @@ class Trash(GameEntity,
     def suicide(self):
         self.game.scheduleAfter(0, self.event('destroy'))
 
+    def on_destroy(self):
+        self._sprite = None
+
     def getResource(self):
         # print("getResources")
         res = self._resource
