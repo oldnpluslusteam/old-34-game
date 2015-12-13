@@ -2,12 +2,28 @@
 # coding=UTF-8
 
 from fwk.ui.screen import Screen
+from fwk.ui.console import GAME_CONSOLE
+
+from fwk.ui.layers.staticBg import StaticBackgroundLauer
+from fwk.ui.layers.guiItem import GUIItemLayer
+from fwk.ui.layers.guitextitem import GUITextItem
 from fwk.ui.layers.gameLayer import GameLayer as GameLayer_
+from fwk.ui.layers.texture9TileItem import *
+
+from fwk.game.game import Game
+from fwk.game.entity import GameEntity
 from fwk.game.camera import Camera
+
+import fwk.sound.static as ssound
+import fwk.sound.music as music
+
 from dynamic_game import DynamicGame
+from entities import meteorite, spaceship, supermassive_meteorite, trash, supermassive_trash
 from fwk.util.all import *
+
 from ui.progress_bar import ProgressBar
 from ui.dynamic_bg import DynamicBG
+
 
 class GameLayer(GameLayer_):
 	'''
