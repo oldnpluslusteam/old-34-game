@@ -22,15 +22,15 @@ class ProgressBar(GUIItemLayer):
 			self._inrect = self.rect.clone().inset(11, 6).scale(scaleX=k,scaleY=1,origin=self._grow_origin)
 			self._expRes = k
 
-		if k > 0:
-			if k < 0.4:
-				gl.glColor3ub(255,0,0)
-			elif k < 0.7:
-				gl.glColor3ub(255,255,0)
-			else:
-				gl.glColor3ub(0,255,0)
-			self.front.draw(self._inrect)
-			gl.glColor3ub(255,255,255)
+		# if k > 0:
+		# 	if k < 0.4:
+		# 		gl.glColor3ub(255,0,0)
+		# 	elif k < 0.7:
+		# 		gl.glColor3ub(255,255,0)
+		# 	else:
+		# 		gl.glColor3ub(0,255,0)
+		self.front.draw(self._inrect)
+		# 	gl.glColor3ub(255,255,255)
 
 	def on_layout_updated(self):
 		self._inrect = None

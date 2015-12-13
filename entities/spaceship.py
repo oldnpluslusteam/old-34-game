@@ -27,6 +27,7 @@ class Spaceship(GameEntity,
         if entity.__class__ != Teleport:
             Play("rc/snd/destroy.wav")
             self.game.ignore("update")
+            self.game.trigger("hitBig")
 
     def hitSmall(self, entity):
         try:
@@ -104,7 +105,9 @@ class Spaceship(GameEntity,
         self._right_engine = is_enabled
         if (self._fuel > 0):
             state = "on" if is_enabled else "off"
-            self.thruster_exhaust_right.animation = state
+        else:
+            state = "off"
+        self.thruster_exhaust_right.animation = state
         try:
             if self._right_tourbin_sound_player.playing:
                 if not is_enabled:
@@ -119,7 +122,9 @@ class Spaceship(GameEntity,
         self._left_engine = is_enabled
         if (self._fuel > 0):
             state = "on" if is_enabled else "off"
-            self.thruster_exhaust_left.animation = state
+        else:
+            state = "off"
+        self.thruster_exhaust_left.animation = state
         try:
             if self._left_tourbin_sound_player.playing:
                 if not is_enabled:
