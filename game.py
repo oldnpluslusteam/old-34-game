@@ -29,6 +29,8 @@ from ui.progress_bar import ProgressBar
 from ui.dynamic_bg import DynamicBG
 from ui.button import Button
 
+GAME_CONSOLE.visible = False
+
 class GUITextItem(GUITextItem_):
 	def draw(self):
 		self._label.draw()
@@ -37,10 +39,10 @@ def level2_data():
 	return {
 		'generation': {
 			'supermassive-trash-entity': {
-				'density': 1.0 # Things per 1024x1024 units
+				'density': 0.5 # Things per 1024x1024 units
 			},
 			'trash-entity': {
-				'density': 5.0
+				'density': 2.5
 			},
 			'teleport-entity': {
 				'density': 0.0
@@ -54,10 +56,10 @@ def level1_data():
 	return {
 		'generation': {
 			'supermassive-trash-entity': {
-				'density': 0.5 # Things per 1024x1024 units
+				'density': 0.25 # Things per 1024x1024 units
 			},
 			'trash-entity': {
-				'density': 10.0
+				'density': 5.0
 			},
 			'teleport-entity': {
 				'density': 0.0
@@ -74,7 +76,7 @@ def level0_data():
 				'density': 0.2 # Things per 1024x1024 units
 			},
 			'trash-entity': {
-				'density': 20.0
+				'density': 10.0
 			},
 			'teleport-entity': {
 				'density': 0.0
