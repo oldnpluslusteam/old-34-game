@@ -65,6 +65,8 @@ class Spaceship(GameEntity,
 
     def change_fuel(self, diff):
         self.fuel += diff
+        if diff < 0:
+            self.game.onFuelSpent(-diff)
         if (self.fuel < 0):
             self.fuel = 0
         if (self.fuel > 100):
