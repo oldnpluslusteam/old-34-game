@@ -43,7 +43,6 @@ class Spaceship(GameEntity,
     def spawn(self):
         try:
             self._left_tourbin_sound_player.pause()
-            self._right_tourbin_sound_player.pause()
         except AttributeError:
             try:
                 self._left_tourbin_sound_player = Play("rc/snd/tourbin-left.wav")
@@ -52,6 +51,8 @@ class Spaceship(GameEntity,
                 self._right_tourbin_sound_player.pause()
             except:
                 pass
+        self._left_tourbin_sound_player.pause()
+        self._right_tourbin_sound_player.pause()
 
         self._right_engine = False
         self._left_engine = False
