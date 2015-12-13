@@ -13,7 +13,6 @@ class Trash(GameEntity,
             GameEntity.mixin.Sprite,
             StandardSpaceEntity,
             SmallEntity):
-    _radius = random.randint(32, 64)
 
     trashImgs = [
         "trash1.png",
@@ -29,11 +28,11 @@ class Trash(GameEntity,
         self.suicide()
 
     def spawn(self):
-        self.radius = self._radius
+        self.radius = random.randint(32, 64)
         self._resource = self.radius*0.25
         self.sprite = 'rc/img/' + self.trashImgs[random.randint(0, len(self.trashImgs)-1)]
-        self.sprite.width = self.radius*2
-        self.sprite.height = self.radius*2
+        targetScale = float(self.radius*2)/self.sprite.width
+        self.scale = targetScale
         self.spriteAnchor = "center"
 
     def suicide(self):
