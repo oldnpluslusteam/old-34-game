@@ -7,56 +7,6 @@
 			"spriteAnchor": "center",
 			"id": "player",
 			"radius": 128
-		},
-		{
-			"_class": "trash-entity",
-			"position": [350,350],
-			"sprite": "rc/img/64x64fg.png",
-			"spriteAnchor": "center",
-			"radius": 64
-		},
-		{
-			"_class": "trash-entity",
-			"position": [250,250],
-			"sprite": "rc/img/64x64fg.png",
-			"spriteAnchor": "center",
-			"radius": 64
-		},
-		{
-			"_class": "trash-entity",
-			"position": [150,150],
-			"sprite": "rc/img/64x64fg.png",
-			"spriteAnchor": "center",
-			"radius": 64
-		},
-		{
-			"_class": "trash-entity",
-			"position": [200,350],
-			"sprite": "rc/img/64x64fg.png",
-			"spriteAnchor": "center",
-			"radius": 64
-		},
-		{
-			"_class": "trash-entity",
-			"position": [350,200],
-			"sprite": "rc/img/64x64fg.png",
-			"spriteAnchor": "center",
-			"radius": 64
-		},
-		{
-			"_class": "trash-entity",
-			"position": [200,200],
-			"sprite": "rc/img/64x64fg.png",
-			"spriteAnchor": "center",
-			"radius": 64
-		},
-		{
-			"_class": "supermassive-trash-entity",
-			"position": [-300,-500],
-			"sprite": "rc/img/64x64fg.png",
-			"spriteAnchor": "center",
-			"radius": 64,
-			"mass": 5.0
 		}
 	]
 }
