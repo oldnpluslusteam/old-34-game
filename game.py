@@ -130,6 +130,12 @@ class GameLayer(GameLayer_):
 	def release_left_thruster(self, *args):
 		self._player.set_left_thruster(False)
 
+	def press_pause(self, *args):
+		pass
+
+	def release_pause(self, *args):
+		self.next = PauseScreen()
+
 @Screen.ScreenClass('STARTUP')
 class StartupScreen(Screen):
 	def init(self, *args, **kwargs):
