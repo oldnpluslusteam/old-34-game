@@ -7,7 +7,7 @@ from fwk.util.rect import Rect
 
 
 class ProgressBar(GUIItemLayer):
-	STANDARD_LAYOUT  = {'height': 30, 'width': 100}
+	STANDARD_LAYOUT  = {'height': 30, 'width': 100, 'top': 10, 'left': 10}
 	def init(self,grow_origin,expression,*args,**kwargs):
 		self._expression = expression
 		self._grow_origin = grow_origin
