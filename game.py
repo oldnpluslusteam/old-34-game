@@ -97,14 +97,14 @@ class GameLayer(GameLayer_):
 	__KEYMAP = {
 		KEY.RCTRL: {"action": "right_thruster"},
 		KEY.LCTRL: {"action": "left_thruster"},
-		KEY.Q: {"action": "pause"}
+		KEY.P: {"action": "pause"}
 	}
 	def init(self,*args,**kwargs):
 		music.Play("rc/snd/background.ogg")
 		print "Inited"
 		self._player = self._game.getEntityById('player')
 		self._camera.setController(self._player)
-		self._camera.scale = 0.4
+		self._camera.scale = 0.35
 
 	def on_key_press(self,key,mod):
 		'''
@@ -170,6 +170,10 @@ class GameScreen(Screen):
 										player=game.getEntityById('player'))
 		self.pushLayerFront(fuel_progress_bar)
 		self.pushLayerFront(GUITextItem(text="Fuel", fontSize=20, layout={'top': 20, 'width': 100, 'height': 20, 'left': 125}))
+		self.pushLayerFront(Button(
+			onclick=self.pause,
+			layout={'width': 256, 'height': 50, 'right': 20, 'top': 20},
+			text="Pause <P>"))
 
 	def onNextLevel(self):
 		if self._ld['next_data'] is not None:
@@ -184,6 +188,9 @@ class GameScreen(Screen):
 
 	def on_key_press(self,key,mod):
 		pass#GAME_CONSOLE.write('SSC:Key down:',KEY.symbol_string(key),'(',key,') [+',KEY.modifiers_string(mod),']')
+
+	def pause(self, *args):
+		self.game_layer.release_pause()
 
 @Screen.ScreenClass('PAUSE')
 class PauseScreen(Screen):

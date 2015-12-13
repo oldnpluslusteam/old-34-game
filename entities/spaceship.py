@@ -102,8 +102,9 @@ class Spaceship(GameEntity,
 
     def set_right_thruster(self, is_enabled):
         self._right_engine = is_enabled
-        state = "on" if is_enabled else "off"
-        self.thruster_exhaust_right.animation = state
+        if (self._fuel > 0):
+            state = "on" if is_enabled else "off"
+            self.thruster_exhaust_right.animation = state
         try:
             if self._right_tourbin_sound_player.playing:
                 if not is_enabled:
@@ -116,8 +117,9 @@ class Spaceship(GameEntity,
 
     def set_left_thruster(self, is_enabled):
         self._left_engine = is_enabled
-        state = "on" if is_enabled else "off"
-        self.thruster_exhaust_left.animation = state
+        if (self._fuel > 0):
+            state = "on" if is_enabled else "off"
+            self.thruster_exhaust_left.animation = state
         try:
             if self._left_tourbin_sound_player.playing:
                 if not is_enabled:
