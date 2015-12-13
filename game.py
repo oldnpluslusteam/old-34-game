@@ -23,6 +23,7 @@ from fwk.util.all import *
 
 from ui.progress_bar import ProgressBar
 from ui.dynamic_bg import DynamicBG
+from ui.button import Button
 
 
 class GameLayer(GameLayer_):
@@ -30,8 +31,9 @@ class GameLayer(GameLayer_):
 	Наследник игрового слоя.
 	'''
 	__KEYMAP = {
-		KEY.RCTRL: {"action": "set_right_thruster"},
-		KEY.LCTRL: {"action": "set_left_thruster"}
+		KEY.RCTRL: {"action": "right_thruster"},
+		KEY.LCTRL: {"action": "left_thruster"},
+		KEY.ESCAPE: {"action": "pause"}
 	}
 	def init(self,*args,**kwargs):
 		self._player = self._game.getEntityById('player')
@@ -44,17 +46,40 @@ class GameLayer(GameLayer_):
 		'''
 		if key in GameLayer.__KEYMAP:
 			k = GameLayer.__KEYMAP[key]
-			fn = getattr(self._player, k["action"])
-			if fn is not None:
-				fn(True)
+			if "action" in k:
+				args = []
+				if "args" in k:
+					args += k["args"]
+				fn = getattr(self, "press_" + k["action"])
+				fn(args)
 
 	def on_key_release(self, key, mod):
 		if key in GameLayer.__KEYMAP:
 			k = GameLayer.__KEYMAP[key]
-			fn = getattr(self._player, k["action"])
-			if fn is not None:
-				fn(False)
+			if "action" in k:
+				args = []
+				if "args" in k:
+					args += k["args"]
+				fn = getattr(self, "release_" + k["action"])
+				fn(args)
 
+	def press_right_thruster(self, *args):
+		self._player.set_right_thruster(True)
+
+	def release_right_thruster(self, *args):
+		self._player.set_right_thruster(False)
+
+	def press_left_thruster(self, *args):
+		self._player.set_left_thruster(True)
+
+	def release_left_thruster(self, *args):
+		self._player.set_left_thruster(False)
+
+	def press_pause(self, *args):
+		pass
+
+	def release_pause(self, *args):
+		self.next = PauseScreen()
 
 	def on_mouse_press(self,x,y,b,mod):
 		'''
@@ -65,6 +90,9 @@ class GameLayer(GameLayer_):
 	def draw(self):
 		GameLayer_.draw(self)
 		tep = self._camera.project(self._game.getEntityById('player').position)
+
+	def on_pause(self):
+		self.next = PauseScreen()
 
 
 @Screen.ScreenClass('STARTUP')
@@ -126,5 +154,27 @@ class StartupScreen(Screen):
 
 @Screen.ScreenClass('PAUSE')
 class PauseScreen(Screen):
-	def init(self,*args,**kwargs):
-		pass
+
+
+	def init(self):
+		self.pushLayerFront(StaticBackgroundLauer('rc/img/kxk-stars-bg.png', mode='fill'))
+
+		self.pushLayerFront(Button(
+			layout={'width': 256, 'height': 50, 'top': 200},
+			text="New Game",
+			onclick=self.new_game))
+		self.pushLayerFront(Button(
+			layout={'width': 256, 'height': 50, 'top': 300},
+			text="Continue",
+			onclick=self.Button))
+		self.pushLayerFront(GUIItemLayer(
+			layout={'width': 256, 'height': 50, 'top': 400},
+			text="Exit",
+			onclick=self.exit_game))
+
+	def new_game(self):
+			self.next = StartupScreen()
+	def continue_game(self):
+			pass
+	def exit_game(self):
+			pass
