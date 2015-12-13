@@ -29,11 +29,13 @@ class GameLayer(GameLayer_):
 	'''
 	Наследник игрового слоя.
 	'''
+
 	__KEYMAP = {
 		KEY.RCTRL: {"action": "set_right_thruster"},
 		KEY.LCTRL: {"action": "set_left_thruster"}
 	}
 	def init(self,*args,**kwargs):
+		music.Play("rc/snd/background.mp3")
 		self._player = self._game.getEntityById('player')
 		self._camera.setController(self._player)
 		self._camera.scale = 0.4
@@ -123,6 +125,9 @@ class StartupScreen(Screen):
 
 	def on_key_press(self,key,mod):
 		pass#GAME_CONSOLE.write('SSC:Key down:',KEY.symbol_string(key),'(',key,') [+',KEY.modifiers_string(mod),']')
+
+	def requireExit(self):
+		pass
 
 @Screen.ScreenClass('PAUSE')
 class PauseScreen(Screen):
