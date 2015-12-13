@@ -1,7 +1,7 @@
 {
     "off": [
         {
-            "img": "rc/img/256x256thrusterExhaust_left.png",
+            "img": "rc/img/256x256thrusterExhaust_left_1.png",
             "t": 666,
             "anchor": "center",
             "rect": {
@@ -14,8 +14,13 @@
     ],
     "on": [
         {
-            "img": "rc/img/256x256thrusterExhaust_left.png",
-            "t": 666,
+            "img": "rc/img/256x256thrusterExhaust_left_1.png",
+            "t": 0.2,
+            "anchor": "center"
+        },
+        {
+            "img": "rc/img/256x256thrusterExhaust_left_2.png",
+            "t": 0.3,
             "anchor": "center"
         }
     ]

@@ -1,0 +1,19 @@
+{
+    "standard": [
+        {
+            "img": "rc/img/256x256spaceship_1.png",
+            "t": 0.2,
+            "anchor": "center"
+        },
+        {
+            "img": "rc/img/256x256spaceship_2.png",
+            "t": 0.1,
+            "anchor": "center"
+        },
+        {
+            "img": "rc/img/256x256spaceship_3.png",
+            "t": 0.3,
+            "anchor": "center"
+        }
+    ]
+}
