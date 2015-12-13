@@ -9,7 +9,7 @@ from fwk.util.geometry import directionFromAngle
 
 @GameEntity.defineClass("spaceship-entity")
 class Spaceship(GameEntity,
-                GameEntity.mixin.Sprite,
+                GameEntity.mixin.Animation,
                 GameEntity.mixin.CameraTarget,
                 StandardSpaceEntity,
                 SmallEntity):
@@ -123,3 +123,7 @@ class Spaceship(GameEntity,
                 self._left_tourbin_sound_player.play()
         except:
             pass
+
+    def on_configured(self):
+        self.animations = "rc/ani/Spaceship_ani.json"
+        self.animation = "standard"
