@@ -21,6 +21,7 @@ class Spaceship(GameEntity,
     _fuelInSecond = 3.4
     _mass = 3.0
     _inertion = 0.9
+    z_index = 1
 
     def hitBig(self, entity):
         if entity.__class__ != Teleport:
@@ -49,10 +50,11 @@ class Spaceship(GameEntity,
                 self._left_tourbin_sound_player.pause()
                 self._right_tourbin_sound_player = Play("rc/snd/tourbin-right.wav")
                 self._right_tourbin_sound_player.pause()
+                self._left_tourbin_sound_player.pause()
+                self._right_tourbin_sound_player.pause()
             except:
                 pass
-        self._left_tourbin_sound_player.pause()
-        self._right_tourbin_sound_player.pause()
+
 
         self._right_engine = False
         self._left_engine = False
