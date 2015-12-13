@@ -24,7 +24,8 @@ class Trash(GameEntity,
         "trash7.png",
         "trash8.png",
         "trash9.png",
-        "trash10.png"
+        "trash10.png",
+        "trash11.png"
     ]
 
     def hitBig(self, entity):

@@ -43,16 +43,17 @@ class Spaceship(GameEntity,
     def spawn(self):
         try:
             self._left_tourbin_sound_player.pause()
+            self._right_tourbin_sound_player.pause()
         except AttributeError:
             try:
                 self._left_tourbin_sound_player = Play("rc/snd/tourbin-left.wav")
+                self._left_tourbin_sound_player.eos_action = self._left_tourbin_sound_player.EOS_LOOP
                 self._left_tourbin_sound_player.pause()
                 self._right_tourbin_sound_player = Play("rc/snd/tourbin-right.wav")
+                self._right_tourbin_sound_player.eos_action = self._right_tourbin_sound_player.EOS_LOOP
                 self._right_tourbin_sound_player.pause()
-            except:
+            except Exception as e:
                 pass
-        self._left_tourbin_sound_player.pause()
-        self._right_tourbin_sound_player.pause()
 
         self._right_engine = False
         self._left_engine = False

@@ -91,6 +91,7 @@ class GameLayer(GameLayer_):
 	}
 	def init(self,*args,**kwargs):
 		music.Play("rc/snd/background.mp3")
+		print "Inited"
 		self._player = self._game.getEntityById('player')
 		self._camera.setController(self._player)
 		self._camera.scale = 0.4
