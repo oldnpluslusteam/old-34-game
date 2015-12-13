@@ -33,7 +33,7 @@ class GameLayer(GameLayer_):
 	__KEYMAP = {
 		KEY.RCTRL: {"action": "right_thruster"},
 		KEY.LCTRL: {"action": "left_thruster"},
-		KEY.ESCAPE: {"action": "pause"}
+		KEY.Q: {"action": "pause"}
 	}
 	def init(self,*args,**kwargs):
 		self._player = self._game.getEntityById('player')
@@ -166,8 +166,8 @@ class PauseScreen(Screen):
 		self.pushLayerFront(Button(
 			layout={'width': 256, 'height': 50, 'top': 300},
 			text="Continue",
-			onclick=self.Button))
-		self.pushLayerFront(GUIItemLayer(
+			onclick=self.continue_game))
+		self.pushLayerFront(Button(
 			layout={'width': 256, 'height': 50, 'top': 400},
 			text="Exit",
 			onclick=self.exit_game))
