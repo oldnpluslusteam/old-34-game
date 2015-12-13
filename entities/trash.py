@@ -12,8 +12,8 @@ class Trash(GameEntity,
             StandardSpaceEntity,
             SmallEntity):
 
-    _maxResource = 30
-    _minResource = 1
+    _maxResource = 20
+    _minResource = 5
 
     def spawn(self):
         self._resource = random.randint(self._minResource, self._maxResource)

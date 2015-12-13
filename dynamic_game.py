@@ -10,9 +10,9 @@ import entities.supermassive_trash
 import entities.trash
 
 _INITIAL_CLEAR_SPACE = 256
-_FAR_BORDERLINE = 2000
-_NEAR_BORDERLINE = 1600
-_REGENERATE_INTERVAL = 0.6
+_FAR_BORDERLINE = 3000
+_NEAR_BORDERLINE = 1500
+_REGENERATE_INTERVAL = 2.0
 
 _GENERATION_DISTRIBUTION = {
 	'supermassive-trash-entity': {

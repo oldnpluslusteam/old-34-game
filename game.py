@@ -36,7 +36,7 @@ class GameLayer(GameLayer_):
 	def init(self,*args,**kwargs):
 		self._player = self._game.getEntityById('player')
 		self._camera.setController(self._player)
-		self._camera.scale = 0.2
+		self._camera.scale = 0.3
 
 	def on_key_press(self,key,mod):
 		'''
@@ -84,8 +84,9 @@ class StartupScreen(Screen):
 		self.pushLayerFront(GameLayer(game=game, camera=Camera()))
 
 		fuel_progress_bar = ProgressBar(grow_origin='top-left',
-			expression=lambda: game.getEntityById('player')._fuel / 100.0,
-			layout=ProgressBar.LEFT_LAYOUT, player=game.getEntityById('player'))
+										expression=lambda: game.getEntityById('player')._fuel / 100.0,
+										layout=ProgressBar.STANDARD_LAYOUT,
+										player=game.getEntityById('player'))
 
 		self.pushLayerFront(fuel_progress_bar)
 
