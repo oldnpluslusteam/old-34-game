@@ -25,6 +25,9 @@ class Trash(GameEntity,
         "trash7.png"
     ]
 
+    def hitBig(self, entity):
+        self.suicide()
+
     def spawn(self):
         self.radius = self._radius
         self._resource = self.radius*0.25
@@ -33,10 +36,12 @@ class Trash(GameEntity,
         self.sprite.height = self.radius*2
         self.spriteAnchor = "center"
 
+    def suicide(self):
+        self.game.scheduleAfter(0, self.event('destroy'))
 
     def getResource(self):
         # print("getResources")
         res = self._resource
         self._resource = 0
-        self.game.scheduleAfter(0, self.event('destroy'))
+        self.suicide()
         return res
