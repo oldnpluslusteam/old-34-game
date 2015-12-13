@@ -4,6 +4,8 @@ from entities.physical import SmallEntity
 from entities.space_entity import StandardSpaceEntity
 from fwk.game.entity import GameEntity
 from fwk.ui.console import GAME_CONSOLE
+from fwk.util.graphics import BlitTextureToRect
+from fwk.util.rect import Rect
 
 
 @GameEntity.defineClass("trash-entity")
@@ -12,13 +14,36 @@ class Trash(GameEntity,
             StandardSpaceEntity,
             SmallEntity):
 
+    trashImgs = [
+        "trash1.png",
+        "trash2.png",
+        "trash3.png",
+        "trash4.png",
+        "trash5.png",
+        "trash6.png",
+        "trash7.png"
+    ]
+
+    def hitBig(self, entity):
+        self.suicide()
+
     def spawn(self):
-        self._resource = random.randint(10, 20)
-        self.sprite = 'rc/img/32x32fg.png'
+        self.radius = random.randint(32, 64)
+        self._resource = self.radius*0.25
+        self.sprite = 'rc/img/' + self.trashImgs[random.randint(0, len(self.trashImgs)-1)]
+        targetScale = float(self.radius*2)/self.sprite.width
+        self.scale = targetScale
+        self.spriteAnchor = "center"
+
+    def suicide(self):
+        self.game.scheduleAfter(0, self.event('destroy'))
+
+    def on_destroy(self):
+        self._sprite = None
 
     def getResource(self):
-        print("getResources")
+        # print("getResources")
         res = self._resource
         self._resource = 0
-        self.game.scheduleAfter(0, self.event('destroy'))
+        self.suicide()
         return res

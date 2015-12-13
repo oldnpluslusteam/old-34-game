@@ -18,12 +18,15 @@ import fwk.sound.static as ssound
 import fwk.sound.music as music
 
 from dynamic_game import DynamicGame
+
 from entities import meteorite, spaceship, supermassive_meteorite, trash, supermassive_trash, teleport
 
 from fwk.util.all import *
 
 from ui.progress_bar import ProgressBar
 from ui.dynamic_bg import DynamicBG
+from ui.button import Button
+
 
 def level2_data():
 	return {
@@ -81,13 +84,14 @@ class GameLayer(GameLayer_):
 	Наследник игрового слоя.
 	'''
 	__KEYMAP = {
-		KEY.RCTRL: {"action": "set_right_thruster"},
-		KEY.LCTRL: {"action": "set_left_thruster"}
+		KEY.RCTRL: {"action": "right_thruster"},
+		KEY.LCTRL: {"action": "left_thruster"},
+		KEY.Q: {"action": "pause"}
 	}
 	def init(self,*args,**kwargs):
 		self._player = self._game.getEntityById('player')
 		self._camera.setController(self._player)
-		self._camera.scale = 0.2
+		self._camera.scale = 0.4
 
 	def on_key_press(self,key,mod):
 		'''
@@ -95,16 +99,34 @@ class GameLayer(GameLayer_):
 		'''
 		if key in GameLayer.__KEYMAP:
 			k = GameLayer.__KEYMAP[key]
-			fn = getattr(self._player, k["action"])
-			if fn is not None:
-				fn(True)
+			if "action" in k:
+				args = []
+				if "args" in k:
+					args += k["args"]
+				fn = getattr(self, "press_" + k["action"])
+				fn(args)
 
 	def on_key_release(self, key, mod):
 		if key in GameLayer.__KEYMAP:
 			k = GameLayer.__KEYMAP[key]
-			fn = getattr(self._player, k["action"])
-			if fn is not None:
-				fn(False)
+			if "action" in k:
+				args = []
+				if "args" in k:
+					args += k["args"]
+				fn = getattr(self, "release_" + k["action"])
+				fn(args)
+
+	def press_right_thruster(self, *args):
+		self._player.set_right_thruster(True)
+
+	def release_right_thruster(self, *args):
+		self._player.set_right_thruster(False)
+
+	def press_left_thruster(self, *args):
+		self._player.set_left_thruster(True)
+
+	def release_left_thruster(self, *args):
+		self._player.set_left_thruster(False)
 
 @Screen.ScreenClass('STARTUP')
 class StartupScreen(Screen):
@@ -122,10 +144,15 @@ class GameScreen(Screen):
 		game.loadFromJSON('rc/lvl/level0.json')
 
 		self.pushLayerFront(DynamicBG(game.getEntityById('player')))
-		self.pushLayerFront(GameLayer(game=game,camera=Camera()))
-		self.pushLayerFront(ProgressBar(grow_origin='top-left',
-			expression=lambda: game.getEntityById('player').fuel / 100.0,
-			layout=ProgressBar.LEFT_LAYOUT,player=game.getEntityById('player')))
+
+		self.pushLayerFront(GameLayer(game=game, camera=Camera()))
+
+		fuel_progress_bar = ProgressBar(grow_origin='top-left',
+										expression=lambda: game.getEntityById('player')._fuel / 100.0,
+										layout={'height': 40, 'width': 300, 'top': 20, 'left': 20},
+										player=game.getEntityById('player'))
+		self.pushLayerFront(fuel_progress_bar)
+		self.pushLayerFront(GUITextItem(text="Fuel", fontSize=20, layout={'top': 20, 'width': 100, 'height': 20, 'left': 125}))
 
 	def onNextLevel(self):
 		if self._ld['next_data'] is not None:
@@ -141,3 +168,30 @@ class GameScreen(Screen):
 @Screen.ScreenClass('END')
 class EndScreen(Screen):
 	pass
+
+@Screen.ScreenClass('PAUSE')
+class PauseScreen(Screen):
+
+
+	def init(self):
+		self.pushLayerFront(StaticBackgroundLauer('rc/img/kxk-stars-bg.png', mode='fill'))
+
+		self.pushLayerFront(Button(
+			layout={'width': 256, 'height': 50, 'top': 200},
+			text="New Game",
+			onclick=self.new_game))
+		self.pushLayerFront(Button(
+			layout={'width': 256, 'height': 50, 'top': 300},
+			text="Continue",
+			onclick=self.continue_game))
+		self.pushLayerFront(Button(
+			layout={'width': 256, 'height': 50, 'top': 400},
+			text="Exit",
+			onclick=self.exit_game))
+
+	def new_game(self):
+			self.next = StartupScreen()
+	def continue_game(self):
+			pass
+	def exit_game(self):
+			pass

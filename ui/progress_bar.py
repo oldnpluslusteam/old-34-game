@@ -7,15 +7,13 @@ from fwk.util.rect import Rect
 
 
 class ProgressBar(GUIItemLayer):
-	LEFT_LAYOUT  = {'height': 30,'width': 100}
-	RIGHT_LAYOUT = {'height': 30,'width': 100}
 	def init(self,grow_origin,expression,*args,**kwargs):
 		self._expression = expression
 		self._grow_origin = grow_origin
 		self.back = _9Tiles(LoadTexture('rc/img/ui-frames.png'),Rect(left=0,bottom=0,width=12,height=12))
 		self.front = _9Tiles(LoadTexture('rc/img/ui-frames.png'),Rect(left=12,bottom=0,width=12,height=12))
-		self._inrect = None
 		self._expRes = 65595
+		self.on_layout_updated()
 
 	def draw(self):
 		self.back.draw(self.rect)

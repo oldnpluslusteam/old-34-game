@@ -13,7 +13,7 @@ def adjustVelocity(small, big, dt):
 	dst = distance(big.position, small.position)
 
 	if dst <= (big.radius + small.radius):
-		print 'coll!'
+		# print 'coll!'
 		big.trigger('hitWith', small)
 		small.trigger('hitBig', big)
 
