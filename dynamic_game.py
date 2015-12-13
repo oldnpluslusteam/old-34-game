@@ -7,21 +7,14 @@ from fwk.util.geometry import *
 from fwk.ui.console import GAME_CONSOLE
 
 import entities.supermassive_trash
+import entities.teleport
 import entities.trash
 
 _INITIAL_CLEAR_SPACE = 256
+_MAX_SPENT_FUEL = 50 # Before creating teleports
+_TELEPORT_NEW_DENSITY = 1.0
 _FAR_BORDERLINE = 3000
 _NEAR_BORDERLINE = 1500
-_REGENERATE_INTERVAL = 2.0
-
-_GENERATION_DISTRIBUTION = {
-	'supermassive-trash-entity': {
-		'density': 0.7 # Things per 1024x1024 units
-	},
-	'trash-entity': {
-		'density': 12.0
-	}
-}
 
 def not_in_square(sqCenter, sqRadius, point):
 	return (point[0] < sqCenter[0] - sqRadius) \
@@ -30,20 +23,25 @@ def not_in_square(sqCenter, sqRadius, point):
 		or (point[1] > sqCenter[1] + sqRadius)
 
 class DynamicGame(Game):
-	def __init__(self):
+	events = [
+		'teleport-player'
+	]
+
+	def __init__(self,level_data):
 		Game.__init__(self)
+		self._generation = level_data['generation']
+
 		self.initialGenerate()
+		self._spent_fuel = 0
 
 	def initialGenerate(self):
 		self._generate(_INITIAL_CLEAR_SPACE, _FAR_BORDERLINE)
 		self._prev_pp = (0,0)
-		# self.scheduleAfter(_REGENERATE_INTERVAL, self.periodicGenerate)
 
 	def periodicGenerate(self):
 		self._killFar(_NEAR_BORDERLINE)
 		self._generate(_NEAR_BORDERLINE, _FAR_BORDERLINE)
 		self._prev_pp = self.player_pos
-		# self.scheduleAfter(_REGENERATE_INTERVAL, self.periodicGenerate)
 
 	def update(self, dt):
 		if not_in_square(self._prev_pp, _NEAR_BORDERLINE, self.player_pos):
@@ -53,15 +51,19 @@ class DynamicGame(Game):
 	def player_pos(self):
 		return getattr(self.getEntityById('player'), 'position', (0,0))
 
+	def onFuelSpent(self, amount):
+		self._spent_fuel += amount
+		if self._spent_fuel >= _MAX_SPENT_FUEL:
+			self._generation['teleport-entity']['density'] = _TELEPORT_NEW_DENSITY
+
 	def _generate(self, minDistance, maxDistance):
 		playerPos = self.player_pos
 		pmax = playerPos[0] + maxDistance, playerPos[1] + maxDistance
 		pmin = playerPos[0] - maxDistance, playerPos[1] - maxDistance
 
-		for cls, params in _GENERATION_DISTRIBUTION.items():
+		for cls, params in self._generation.items():
 			clz = GameEntity.getClass(cls)
 			amount = int(params['density'] * maxDistance * maxDistance / (1024*1024))
-			# GAME_CONSOLE.write('Amount of ', cls, ' is ', amount)
 			for _ in range(amount):
 				pos = random.uniform(pmin[0], pmax[0]), random.uniform(pmin[1], pmax[1])
 				if not_in_square(playerPos, minDistance, pos):
@@ -70,16 +72,10 @@ class DynamicGame(Game):
 					self.setEntityTags(ent, 'dynamic')
 					ent.position = pos
 
-		# GAME_CONSOLE.write('Generate complete!')
-
 	def _killFar(self, minDistance):
 		playerPos = self.player_pos
 		dynamic = self.getEntitiesByTag('dynamic')
 
-		n = 0
-
 		for ent in dynamic:
 			if not_in_square(playerPos, minDistance, ent.position):
 				ent.destroy()
-				n += 1
-		# GAME_CONSOLE.write('killed ', n)

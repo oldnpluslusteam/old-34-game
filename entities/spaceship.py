@@ -40,11 +40,13 @@ class Spaceship(GameEntity,
     #
     # standardVelocity = 3000
     def spawn(self):
-
-        self._left_tourbin_sound_player = Play("rc/snd/tourbin-left.wav")
-        self._left_tourbin_sound_player.pause()
-        self._right_tourbin_sound_player = Play("rc/snd/tourbin-right.wav")
-        self._right_tourbin_sound_player.pause()
+        try:
+            self._left_tourbin_sound_player = Play("rc/snd/tourbin-left.wav")
+            self._left_tourbin_sound_player.pause()
+            self._right_tourbin_sound_player = Play("rc/snd/tourbin-right.wav")
+            self._right_tourbin_sound_player.pause()
+        except:
+            pass
         self._right_engine = False
         self._left_engine = False
 
@@ -57,6 +59,7 @@ class Spaceship(GameEntity,
         self.thruster_exhaust_right.parent = self
         self.game.addEntity(self.thruster_exhaust_right)
         self.thruster_exhaust_right.animations = "rc/ani/TE_right.json"
+        self.fuel = 100
         # for future
         # self.health = 100
 
@@ -75,11 +78,13 @@ class Spaceship(GameEntity,
         self.change_fuel(-self._fuelInSecond*dt)
 
     def change_fuel(self, diff):
-        self._fuel += diff
-        if (self._fuel < 0):
-            self._fuel = 0
-        if (self._fuel > 100):
-            self._fuel = 100
+        self.fuel += diff
+        if diff < 0:
+            self.game.onFuelSpent(-diff)
+        if (self.fuel < 0):
+            self.fuel = 0
+        if (self.fuel > 100):
+            self.fuel = 100
 
     def update(self, dt):
         if (self._left_engine and self._fuel > 0):
@@ -92,20 +97,26 @@ class Spaceship(GameEntity,
         self._right_engine = is_enabled
         state = "on" if is_enabled else "off"
         self.thruster_exhaust_right.animation = state
-        if self._right_tourbin_sound_player.playing:
-            if not is_enabled:
-                self._right_tourbin_sound_player.pause()
-            return
-        else:
-            self._right_tourbin_sound_player.play()
+        try:
+            if self._right_tourbin_sound_player.playing:
+                if not is_enabled:
+                    self._right_tourbin_sound_player.pause()
+                return
+            else:
+                self._right_tourbin_sound_player.play()
+        except:
+            pass
 
     def set_left_thruster(self, is_enabled):
         self._left_engine = is_enabled
         state = "on" if is_enabled else "off"
         self.thruster_exhaust_left.animation = state
-        if self._left_tourbin_sound_player.playing:
-            if not is_enabled:
-                self._left_tourbin_sound_player.pause()
-            return
-        else:
-            self._left_tourbin_sound_player.play()
+        try:
+            if self._left_tourbin_sound_player.playing:
+                if not is_enabled:
+                    self._left_tourbin_sound_player.pause()
+                return
+            else:
+                self._left_tourbin_sound_player.play()
+        except:
+            pass
