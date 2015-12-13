@@ -1,5 +1,7 @@
 #!/usr/bin/python
 # coding=UTF-8
+from pyglet.media import Player
+
 from fwk.sound import static
 from fwk.ui.screen import Screen
 from fwk.ui.console import GAME_CONSOLE
@@ -93,7 +95,7 @@ class GameLayer(GameLayer_):
 		KEY.Q: {"action": "pause"}
 	}
 	def init(self,*args,**kwargs):
-		static.Play("rc/snd/background.wav")
+		static.Play("rc/snd/background.wav").eos_action = Player.EOS_LOOP
 		print "Inited"
 		self._player = self._game.getEntityById('player')
 		self._camera.setController(self._player)

@@ -26,6 +26,7 @@ class Spaceship(GameEntity,
     def hitBig(self, entity):
         if entity.__class__ != Teleport:
             Play("rc/snd/destroy.wav")
+            self.game.ignore("update")
 
     def hitSmall(self, entity):
         try:
