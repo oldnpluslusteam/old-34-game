@@ -52,6 +52,7 @@ class Spaceship(GameEntity,
                 self._left_tourbin_sound_player.pause()
                 self._right_tourbin_sound_player = Play("rc/snd/tourbin-right.wav")
                 self._right_tourbin_sound_player.eos_action = self._right_tourbin_sound_player.EOS_LOOP
+                self._right_tourbin_sound_player.pause()
             except Exception as e:
                 pass
 
@@ -129,3 +130,7 @@ class Spaceship(GameEntity,
     def on_configured(self):
         self.animations = "rc/ani/Spaceship_ani.json"
         self.animation = "standard"
+
+    def on_destroy(self):
+        self._left_tourbin_sound_player.pause()
+        self._right_tourbin_sound_player.pause()
