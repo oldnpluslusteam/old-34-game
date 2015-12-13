@@ -29,8 +29,9 @@ class Trash(GameEntity,
 
     def spawn(self):
         self.radius = random.randint(32, 64)
+        self.rotation = random.randint(0, 360)
         self._resource = self.radius*0.25
-        self.sprite = 'rc/img/' + self.trashImgs[random.randint(0, len(self.trashImgs)-1)]
+        self.sprite = 'rc/img/' + random.sample(self.trashImgs, 1)[0]
         targetScale = float(self.radius*2)/self.sprite.width
         self.scale = targetScale
         self.spriteAnchor = "center"

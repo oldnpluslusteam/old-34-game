@@ -22,7 +22,7 @@ class SupermassiveTrash(GameEntity,
     def spawn(self):
         self.radius = random.randint(128, 256)
         self.mass = 0.1*self.radius
-        self.sprite = 'rc/img/' + self.supermassive_trash_imgs[random.randint(0, len(self.supermassive_trash_imgs)-1)]
+        self.sprite = 'rc/img/' + random.sample(self.supermassive_trash_imgs, 1)[0]
         targetScale = float(self.radius*2)/self.sprite.width
         self.scale = targetScale
         self.spriteAnchor = "center"

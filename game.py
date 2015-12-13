@@ -83,12 +83,14 @@ class GameLayer(GameLayer_):
 	'''
 	Наследник игрового слоя.
 	'''
+
 	__KEYMAP = {
 		KEY.RCTRL: {"action": "right_thruster"},
 		KEY.LCTRL: {"action": "left_thruster"},
 		KEY.Q: {"action": "pause"}
 	}
 	def init(self,*args,**kwargs):
+		music.Play("rc/snd/background.mp3")
 		self._player = self._game.getEntityById('player')
 		self._camera.setController(self._player)
 		self._camera.scale = 0.4

@@ -2,6 +2,7 @@ from entities.physical import SmallEntity
 from entities.space_entity import StandardSpaceEntity
 from entities.thruster_exhaust import ThrusterExhaust
 from fwk.game.entity import GameEntity
+from fwk.sound.static import Play
 from fwk.ui.console import GAME_CONSOLE
 from fwk.util.geometry import directionFromAngle
 
@@ -22,11 +23,12 @@ class Spaceship(GameEntity,
     _inertion = 0.9
 
     def hitBig(self, entity):
-        pass
+        Play("rc/snd/destroy.mp3")
 
     def hitSmall(self, entity):
         try:
             self.change_fuel(entity.getResource())
+            Play("rc/snd/collect.mp3")
         except:
             pass
 
@@ -38,6 +40,13 @@ class Spaceship(GameEntity,
     #
     # standardVelocity = 3000
     def spawn(self):
+        try:
+            self._left_tourbin_sound_player = Play("rc/snd/tourbin-left.mp3")
+            self._left_tourbin_sound_player.pause()
+            self._right_tourbin_sound_player = Play("rc/snd/tourbin-right.mp3")
+            self._right_tourbin_sound_player.pause()
+        except:
+            pass
         self._right_engine = False
         self._left_engine = False
 
@@ -80,6 +89,7 @@ class Spaceship(GameEntity,
     def update(self, dt):
         if (self._left_engine and self._fuel > 0):
             self.handle_left_engine(dt)
+
         if (self._right_engine and self._fuel > 0):
             self.handle_right_engine(dt)
 
@@ -87,8 +97,26 @@ class Spaceship(GameEntity,
         self._right_engine = is_enabled
         state = "on" if is_enabled else "off"
         self.thruster_exhaust_right.animation = state
+        try:
+            if self._right_tourbin_sound_player.playing:
+                if not is_enabled:
+                    self._right_tourbin_sound_player.pause()
+                return
+            else:
+                self._right_tourbin_sound_player.play()
+        except:
+            pass
 
     def set_left_thruster(self, is_enabled):
         self._left_engine = is_enabled
         state = "on" if is_enabled else "off"
         self.thruster_exhaust_left.animation = state
+        try:
+            if self._left_tourbin_sound_player.playing:
+                if not is_enabled:
+                    self._left_tourbin_sound_player.pause()
+                return
+            else:
+                self._left_tourbin_sound_player.play()
+        except:
+            pass
