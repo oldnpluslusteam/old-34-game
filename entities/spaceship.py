@@ -122,6 +122,8 @@ class Spaceship(GameEntity,
             if self._left_tourbin_sound_player.playing:
                 if not is_enabled:
                     self._left_tourbin_sound_player.pause()
+                    state = "on" if is_enabled else "off"
+                    self.thruster_exhaust_left.animation = state
                 return
             else:
                 self._left_tourbin_sound_player.play()
