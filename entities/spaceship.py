@@ -1,9 +1,9 @@
 from entities.physical import SmallEntity
 from entities.space_entity import StandardSpaceEntity
+from entities.teleport import Teleport
 from entities.thruster_exhaust import ThrusterExhaust
 from fwk.game.entity import GameEntity
 from fwk.sound.static import Play
-from fwk.ui.console import GAME_CONSOLE
 from fwk.util.geometry import directionFromAngle
 
 
@@ -23,7 +23,8 @@ class Spaceship(GameEntity,
     _inertion = 0.9
 
     def hitBig(self, entity):
-        Play("rc/snd/destroy.wav")
+        if entity.__class__ != Teleport:
+            Play("rc/snd/destroy.wav")
 
     def hitSmall(self, entity):
         try:
@@ -41,12 +42,17 @@ class Spaceship(GameEntity,
     # standardVelocity = 3000
     def spawn(self):
         try:
-            self._left_tourbin_sound_player = Play("rc/snd/tourbin-left.wav")
             self._left_tourbin_sound_player.pause()
-            self._right_tourbin_sound_player = Play("rc/snd/tourbin-right.wav")
             self._right_tourbin_sound_player.pause()
-        except:
-            pass
+        except AttributeError:
+            try:
+                self._left_tourbin_sound_player = Play("rc/snd/tourbin-left.wav")
+                self._left_tourbin_sound_player.pause()
+                self._right_tourbin_sound_player = Play("rc/snd/tourbin-right.wav")
+                self._right_tourbin_sound_player.pause()
+            except:
+                pass
+
         self._right_engine = False
         self._left_engine = False
 
@@ -59,9 +65,6 @@ class Spaceship(GameEntity,
         self.thruster_exhaust_right.parent = self
         self.game.addEntity(self.thruster_exhaust_right)
         self.thruster_exhaust_right.animations = "rc/ani/TE_right.json"
-        self.fuel = 100
-        # for future
-        # self.health = 100
 
     def handle_velocity(self, vector, dt):
         v = self.velocity
@@ -78,13 +81,13 @@ class Spaceship(GameEntity,
         self.change_fuel(-self._fuelInSecond*dt)
 
     def change_fuel(self, diff):
-        self.fuel += diff
+        self._fuel += diff
         if diff < 0:
             self.game.onFuelSpent(-diff)
-        if (self.fuel < 0):
-            self.fuel = 0
-        if (self.fuel > 100):
-            self.fuel = 100
+        if (self._fuel < 0):
+            self._fuel = 0
+        if (self._fuel > 100):
+            self._fuel = 100
 
     def update(self, dt):
         if (self._left_engine and self._fuel > 0):
