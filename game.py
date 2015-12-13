@@ -6,7 +6,7 @@ from fwk.ui.console import GAME_CONSOLE
 
 from fwk.ui.layers.staticBg import StaticBackgroundLauer
 from fwk.ui.layers.guiItem import GUIItemLayer
-from fwk.ui.layers.guitextitem import GUITextItem
+from fwk.ui.layers.guitextitem import GUITextItem as GUITextItem_
 from fwk.ui.layers.gameLayer import GameLayer as GameLayer_
 from fwk.ui.layers.texture9TileItem import *
 
@@ -27,6 +27,9 @@ from ui.progress_bar import ProgressBar
 from ui.dynamic_bg import DynamicBG
 from ui.button import Button
 
+class GUITextItem(GUITextItem_):
+	def draw(self):
+		self._label.draw()
 
 def level2_data():
 	return {
@@ -139,11 +142,6 @@ class GameLayer(GameLayer_):
 		games_screen = self.screen
 		games_screen.next = Screen.new("PAUSE")
 
-@Screen.ScreenClass('STARTUP')
-class StartupScreen(Screen):
-	def init(self, *args, **kwargs):
-		self.next = Screen.new('GAME')
-
 @Screen.ScreenClass('GAME')
 class GameScreen(Screen):
 	def init(self,level_data=level0_data,*args,**kwargs):
@@ -180,10 +178,6 @@ class GameScreen(Screen):
 	def on_key_press(self,key,mod):
 		pass#GAME_CONSOLE.write('SSC:Key down:',KEY.symbol_string(key),'(',key,') [+',KEY.modifiers_string(mod),']')
 
-@Screen.ScreenClass('END')
-class EndScreen(Screen):
-	pass
-
 @Screen.ScreenClass('PAUSE')
 class PauseScreen(Screen):
 	def init(self):
@@ -212,3 +206,58 @@ class PauseScreen(Screen):
 
 	def exit_game(self, *args):
 		exit()
+
+@Screen.ScreenClass('DEATHSCREEN')
+class DeathScreen(Screen):
+	def init(self):
+		self.pushLayerFront(StaticBackgroundLauer('rc/img/kxk-stars-bg.png', mode='fill'))
+
+		self.pushLayerFront(GUITextItem(
+			layout={'width': 256, 'height': 50, 'top': 200},
+			text="You have died"))
+		self.pushLayerFront(Button(
+			onclick=self.new_game(),
+			layout={'width': 256, 'height': 50, 'top': 300},
+			text="Next time..."))
+
+	def new_game(self, *args):
+		self.next = Screen.new('STARTUP')
+
+@Screen.ScreenClass('END')
+class EndScreen(Screen):
+	def init(self):
+		self.pushLayerFront(StaticBackgroundLauer('rc/img/kxk-stars-bg.png', mode='fill'))
+
+		self.pushLayerFront(GUITextItem(
+			layout={'width': 256, 'height': 50, 'top': 200},
+			text="You have won"))
+		self.pushLayerFront(Button(
+			onclick=self.new_game(),
+			layout={'width': 256, 'height': 50, 'top': 300},
+			text="GOTCHA"))
+
+	def new_game(self, *args):
+		self.next = Screen.new('STARTUP')
+
+@Screen.ScreenClass('STARTUP')
+class StartupScreen(Screen):
+	def init(self):
+		self.pushLayerFront(StaticBackgroundLauer('rc/img/kxk-stars-bg.png', mode='fill'))
+
+		self.pushLayerFront(Button(
+			onclick=self.new_game,
+			layout={'width': 256, 'height': 50, 'top': 300},
+			text="New Game"))
+		self.pushLayerFront(Button(
+			onclick=self.exit_game,
+			layout={'width': 256, 'height': 50, 'top': 400},
+			text="Exit"))
+
+	def new_game(self, *args):
+		self.next = Screen.new('GAME')
+
+	def exit_game(self, *args):
+		exit()
+
+	# def init(self, *args, **kwargs):
+	# 	self.next = Screen.new('GAME')
