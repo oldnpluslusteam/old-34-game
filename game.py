@@ -36,7 +36,7 @@ class GameLayer(GameLayer_):
 	def init(self,*args,**kwargs):
 		self._player = self._game.getEntityById('player')
 		self._camera.setController(self._player)
-		self._camera.scale = 0.3
+		self._camera.scale = 0.4
 
 	def on_key_press(self,key,mod):
 		'''
