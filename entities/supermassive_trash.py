@@ -16,6 +16,7 @@ class SupermassiveTrash(GameEntity,
         "supermassive-trash2.png",
         "supermassive-trash3.png",
         "supermassive-trash4.png",
+        "supermassive-trash5.png",
         "trash4.png",
         "trash5.png"
     ]
