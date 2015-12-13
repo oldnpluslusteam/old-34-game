@@ -49,7 +49,8 @@ def level2_data():
 			}
 		},
 		'next_data': None,
-		'title': 'Level# 3'
+		'title': 'Level# 3',
+		'bg': 'rc/img/kosmosbg_uroven_3.png'
 	}
 
 def level1_data():
@@ -66,7 +67,8 @@ def level1_data():
 			}
 		},
 		'next_data': level2_data,
-		'title': 'Level# 2'
+		'title': 'Level# 2',
+		'bg': 'rc/img/kosmosbg_uroven_2.png'
 	}
 
 def level0_data():
@@ -83,7 +85,8 @@ def level0_data():
 			}
 		},
 		'next_data': level1_data,
-		'title': 'Level# 1'
+		'title': 'Level# 1',
+		'bg': 'rc/img/kosmosbg.png'
 	}
 
 class GameLayer(GameLayer_):
@@ -97,7 +100,7 @@ class GameLayer(GameLayer_):
 		KEY.Q: {"action": "pause"}
 	}
 	def init(self,*args,**kwargs):
-		static.Play("rc/snd/background.wav").eos_action = Player.EOS_LOOP
+		music.Play("rc/snd/background.ogg")
 		print "Inited"
 		self._player = self._game.getEntityById('player')
 		self._camera.setController(self._player)
@@ -157,7 +160,7 @@ class GameScreen(Screen):
 		game.loadFromJSON('rc/lvl/level0.json')
 		self.game = game
 
-		self.pushLayerFront(DynamicBG(game.getEntityById('player')))
+		self.pushLayerFront(DynamicBG(game.getEntityById('player'), self._ld['bg']))
 		self.game_layer = GameLayer(game=game, camera=Camera())
 		self.pushLayerFront(self.game_layer)
 
@@ -246,7 +249,7 @@ class EndScreen(Screen):
 @Screen.ScreenClass('STARTUP')
 class StartupScreen(Screen):
 	def init(self):
-		self.pushLayerFront(StaticBackgroundLauer('rc/img/kxk-stars-bg.png', mode='fill'))
+		self.pushLayerFront(StaticBackgroundLauer('rc/img/kosmo_1.png', mode='fill'))
 
 		self.pushLayerFront(Button(
 			onclick=self.new_game,

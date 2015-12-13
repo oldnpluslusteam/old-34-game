@@ -5,8 +5,8 @@ from pyglet import gl
 
 
 class DynamicBG(StaticBackgroundLauer):
-	def __init__(self, player):
-		StaticBackgroundLauer.__init__(self, 'rc/img/kxk-stars-bg.png', 'fill')
+	def __init__(self, player, bg):
+		StaticBackgroundLauer.__init__(self, bg, 'fill')
 		self._player = player
 
 	def draw(self):
