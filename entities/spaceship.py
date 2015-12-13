@@ -14,7 +14,7 @@ class Spaceship(GameEntity,
                 StandardSpaceEntity,
                 SmallEntity):
 
-    _standardAngleVelocity = 75
+    _standardAngleVelocity = 130
     _standardVelocity = 400
 
     _fuel = 100.0
