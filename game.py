@@ -81,11 +81,13 @@ class StartupScreen(Screen):
 
 		self.pushLayerFront(DynamicBG(game.getEntityById('player')))
 
-		self.pushLayerFront(GameLayer(game=game,camera=Camera()))
+		self.pushLayerFront(GameLayer(game=game, camera=Camera()))
 
-		self.pushLayerFront(ProgressBar(grow_origin='top-left',
+		fuel_progress_bar = ProgressBar(grow_origin='top-left',
 			expression=lambda: game.getEntityById('player')._fuel / 100.0,
-			layout=ProgressBar.LEFT_LAYOUT,player=game.getEntityById('player')))
+			layout=ProgressBar.LEFT_LAYOUT, player=game.getEntityById('player'))
+
+		self.pushLayerFront(fuel_progress_bar)
 
 		# ssound.Preload('rc/snd/1.wav',['alias0'])
         #
@@ -121,3 +123,8 @@ class StartupScreen(Screen):
 
 	def on_key_press(self,key,mod):
 		pass#GAME_CONSOLE.write('SSC:Key down:',KEY.symbol_string(key),'(',key,') [+',KEY.modifiers_string(mod),']')
+
+@Screen.ScreenClass('PAUSE')
+class PauseScreen(Screen):
+	def init(self,*args,**kwargs):
+		pass

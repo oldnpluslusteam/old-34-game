@@ -13,11 +13,11 @@ class Spaceship(GameEntity,
                 StandardSpaceEntity,
                 SmallEntity):
 
-    _standardAngleVelocity = 70
-    _standardVelocity = 715
+    _standardAngleVelocity = 75
+    _standardVelocity = 400
 
     _fuel = 100.0
-    _fuelInSecond = 4.0
+    _fuelInSecond = 3.4
     _mass = 3.0
     _inertion = 0.9
 
@@ -25,8 +25,10 @@ class Spaceship(GameEntity,
         pass
 
     def hitSmall(self, entity):
-        if (entity != self):
+        try:
             self.change_fuel(entity.getResource())
+        except:
+            pass
 
     # time_for_full_velocity = 3.0
     # full_velocity = 150

@@ -10,16 +10,16 @@ import entities.supermassive_trash
 import entities.trash
 
 _INITIAL_CLEAR_SPACE = 256
-_FAR_BORDERLINE = 1700
-_NEAR_BORDERLINE = 1500
-_REGENERATE_INTERVAL = 5.0
+_FAR_BORDERLINE = 2000
+_NEAR_BORDERLINE = 1600
+_REGENERATE_INTERVAL = 0.6
 
 _GENERATION_DISTRIBUTION = {
 	'supermassive-trash-entity': {
-		'density': 0.5 # Things per 1024x1024 units
+		'density': 0.7 # Things per 1024x1024 units
 	},
 	'trash-entity': {
-		'density': 10.0
+		'density': 12.0
 	}
 }
 

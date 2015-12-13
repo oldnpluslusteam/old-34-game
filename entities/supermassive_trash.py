@@ -9,6 +9,6 @@ class SupermassiveTrash(GameEntity,
                         GameEntity.mixin.Sprite,
                         BigEntity):
     def spawn(self):
-        self.radius = 64
-        self.mass = 10
+        self.radius = 32
+        self.mass = 5.0
         self.sprite = 'rc/img/64x64fg.png'
