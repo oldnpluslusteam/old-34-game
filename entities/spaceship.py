@@ -23,12 +23,12 @@ class Spaceship(GameEntity,
     _inertion = 0.9
 
     def hitBig(self, entity):
-        self._destroy_sound_player.play()
+        Play("rc/snd/destroy.wav")
 
     def hitSmall(self, entity):
         try:
             self.change_fuel(entity.getResource())
-            self._collect_trash.play()
+            Play("rc/snd/collect.wav")
         except:
             pass
 
@@ -41,14 +41,10 @@ class Spaceship(GameEntity,
     # standardVelocity = 3000
     def spawn(self):
 
-        self._left_tourbin_sound_player = Play("rc/snd/tourbin-left.mp3")
+        self._left_tourbin_sound_player = Play("rc/snd/tourbin-left.wav")
         self._left_tourbin_sound_player.pause()
-        self._right_tourbin_sound_player = Play("rc/snd/tourbin-right.mp3")
+        self._right_tourbin_sound_player = Play("rc/snd/tourbin-right.wav")
         self._right_tourbin_sound_player.pause()
-        self._destroy_sound_player = Play("rc/snd/destroy.mp3")
-        self._destroy_sound_player.pause()
-        self._collect_trash = Play("rc/snd/collect.mp3")
-        self._collect_trash.pause()
         self._right_engine = False
         self._left_engine = False
 
