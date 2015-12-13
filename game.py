@@ -84,10 +84,10 @@ class StartupScreen(Screen):
 
 		fuel_progress_bar = ProgressBar(grow_origin='top-left',
 										expression=lambda: game.getEntityById('player')._fuel / 100.0,
-										layout=ProgressBar.STANDARD_LAYOUT,
+										layout={'height': 40, 'width': 300, 'top': 20, 'left': 20},
 										player=game.getEntityById('player'))
-
 		self.pushLayerFront(fuel_progress_bar)
+		self.pushLayerFront(GUITextItem(text="Fuel", fontSize=20, layout={'top': 20, 'width': 100, 'height': 20, 'left': 125}))
 
 		# ssound.Preload('rc/snd/1.wav',['alias0'])
         #
