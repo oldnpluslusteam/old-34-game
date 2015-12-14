@@ -194,8 +194,8 @@ class GameScreen(Screen):
 		self.pushLayerFront(GUITextItem(text="Fuel", fontSize=20, layout={'top': 20, 'width': 100, 'height': 20, 'left': 125}))
 		self.pushLayerFront(Button(
 			onclick=self.pause,
-			layout={'width': 256, 'height': 50, 'right': 20, 'top': 20},
-			text="Pause <P>"))
+			layout={'width': 256, 'height': 64, 'right': 20, 'top': 20},
+			img="rc/img/256*64_continue_btn.png"))
 
 	def foo(self):
 		GAME_CONSOLE.write('your died!')
@@ -238,16 +238,16 @@ class PauseScreen(Screen):
 
 		self.pushLayerFront(Button(
 			onclick=self.continue_game,
-			layout={'width': 256, 'height': 50, 'top': 200},
-			text="Continue"))
+			layout={'width': 256, 'height': 64, 'top': 200},
+			img="rc/img/256*64_continue_btn.png"))
 		self.pushLayerFront(Button(
 			onclick=self.new_game,
-			layout={'width': 256, 'height': 50, 'top': 300},
-			text="New Game"))
+			layout={'width': 256, 'height': 64, 'top': 300},
+			img="rc/img/256*64_continue_btn.png"))
 		self.pushLayerFront(Button(
 			onclick=self.exit_game,
-			layout={'width': 256, 'height': 50, 'top': 400},
-			text="Exit"))
+			layout={'width': 256, 'height': 64, 'top': 400},
+			img="rc/img/256*64_continue_btn.png"))
 
 	def new_game(self, *args):
 		self.next = Screen.new('GAME')
@@ -265,12 +265,12 @@ class DeathScreen(Screen):
 		self.pushLayerFront(StaticBackgroundLauer('rc/img/1600x1200bg_2.png', mode='fill'))
 
 		self.pushLayerFront(GUITextItem(
-			layout={'width': 256, 'height': 50, 'top': 200},
+			layout={'width': 256, 'height': 64, 'top': 200},
 			text="You have died"))
 		self.pushLayerFront(Button(
 			onclick=self.new_game,
-			layout={'width': 256, 'height': 50, 'top': 300},
-			text="Next time..."))
+			layout={'width': 256, 'height': 64, 'top': 300},
+			img="rc/img/256*64_continue_btn.png"))
 
 	def new_game(self, *args):
 		self.next = Screen.new('STARTUP')
@@ -287,7 +287,7 @@ class WinScreen(Screen):
 
 	def foo_00(self):
 		self._titrbI = GUITextItem(
-			layout={'width': 256, 'height': 50, 'top': 200},
+			layout={'width': 256, 'height': 64, 'top': 200},
 			text="You win")
 		self.pushLayerFront(self._titrbI)
 		self.schedule.scheduleAfter(1, self.foo_03)
@@ -303,8 +303,8 @@ class WinScreen(Screen):
 	def foo_10(self):
 		self.pushLayerFront(Button(
 			onclick=self.new_game,
-			layout={'width': 256, 'height': 50, 'top': 300},
-			text="GOTCHA"))
+			layout={'width': 256, 'height': 64, 'top': 300},
+			img="rc/img/256*64_continue_btn.png"))
 
 	def new_game(self, *args):
 		self.next = Screen.new('STARTUP')
@@ -318,12 +318,12 @@ class StartupScreen(Screen):
 
 		self.pushLayerFront(Button(
 			onclick=self.new_game,
-			layout={'width': 256, 'height': 50, 'top': 300},
-			text="New Game"))
+			layout={'width': 256, 'height': 64, 'top': 300},
+			img="rc/img/256*64_continue_btn.png"))
 		self.pushLayerFront(Button(
 			onclick=self.exit_game,
-			layout={'width': 256, 'height': 50, 'top': 400},
-			text="Exit"))
+			layout={'width': 256, 'height': 64, 'top': 400},
+			img="rc/img/256*64_continue_btn.png"))
 
 	def new_game(self, *args):
 		self.next = Screen.new('GAME')
