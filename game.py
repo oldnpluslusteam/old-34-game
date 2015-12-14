@@ -156,6 +156,9 @@ class GameScreen(Screen):
 		self._ld = level_data()
 		GAME_CONSOLE.write('Next level: ', self._ld['title'], '!')
 
+		if level_data == level0_data:
+			spaceship.Spaceship._fuel = 100
+
 		game = DynamicGame(level_data=self._ld)
 		game.on('teleport-player', self.onNextLevel)
 		game.loadFromJSON('rc/lvl/level0.json')
