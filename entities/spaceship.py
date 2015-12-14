@@ -109,7 +109,7 @@ class Spaceship(GameEntity,
             state = "off"
         self.thruster_exhaust_right.animation = state
         try:
-            if self._right_tourbin_sound_player.playing != is_enabled:
+            if self._right_tourbin_sound_player.playing != (is_enabled and Spaceship._fuel > 0):
                 if is_enabled:
                     self._right_tourbin_sound_player.play()
                 else:
@@ -125,7 +125,7 @@ class Spaceship(GameEntity,
             state = "off"
         self.thruster_exhaust_left.animation = state
         try:
-            if self._left_tourbin_sound_player.playing != is_enabled:
+            if self._left_tourbin_sound_player.playing != (is_enabled and Spaceship._fuel > 0):
                 if is_enabled:
                     self._left_tourbin_sound_player.play()
                 else:
