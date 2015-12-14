@@ -250,11 +250,23 @@ class DeathScreen(Screen):
 @Screen.ScreenClass('WIN')
 class WinScreen(Screen):
 	def init(self):
+		self.schedule = Schedule()
+		self.on('update', self.schedule.update)
+		self.schedule.scheduleAfter(1, self.foo_00)
 		self.pushLayerFront(StaticBackgroundLauer('rc/img/1600x1200bg.png', mode='fill'))
 
-		self.pushLayerFront(GUITextItem(
+	def foo_00(self):
+		self._titrbI = GUITextItem(
 			layout={'width': 256, 'height': 50, 'top': 200},
-			text="You have won"))
+			text="You win")
+		self.pushLayerFront(self._titrbI)
+		self.schedule.scheduleAfter(1, self.foo_03)
+
+	def foo_03(self):
+		self._titrbI.text = 'T|/|TPb| TYT'
+		self.schedule.scheduleAfter(1, self.foo_10)
+
+	def foo_10(self):
 		self.pushLayerFront(Button(
 			onclick=self.new_game,
 			layout={'width': 256, 'height': 50, 'top': 300},
