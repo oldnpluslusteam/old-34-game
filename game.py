@@ -41,10 +41,10 @@ def level2_data():
 	return {
 		'generation': {
 			'supermassive-trash-entity': {
-				'density': 0.5 # Things per 1024x1024 units
+				'density': 0.4 # Things per 1024x1024 units
 			},
 			'trash-entity': {
-				'density': 5
+				'density': 6.0
 			},
 			'teleport-entity': {
 				'density': 0.0
@@ -59,10 +59,10 @@ def level1_data():
 	return {
 		'generation': {
 			'supermassive-trash-entity': {
-				'density': 0.25 # Things per 1024x1024 units
+				'density': 0.2 # Things per 1024x1024 units
 			},
 			'trash-entity': {
-				'density': 8.0
+				'density': 7.0
 			},
 			'teleport-entity': {
 				'density': 0.0
@@ -77,16 +77,16 @@ def level0_data():
 	return {
 		'generation': {
 			'supermassive-trash-entity': {
-				'density': 0.2 # Things per 1024x1024 units
+				'density': 0.1 # Things per 1024x1024 units
 			},
 			'trash-entity': {
-				'density': 10.0
+				'density': 9.0
 			},
 			'teleport-entity': {
 				'density': 0.0
 			}
 		},
-		'next_data': level1_data,
+		'next_data': None,
 		'title': 'Level# 1',
 		'bg': 'rc/img/kosmosbg.png'
 	}
@@ -287,18 +287,38 @@ class WinScreen(Screen):
 
 	def foo_00(self):
 		self._titrbI = GUITextItem(
-			layout={'width': 256, 'height': 64, 'top': 200},
-			text="You win")
+			layout={'width': 256, 'height': 64, 'top': 100},
+			text="...what's happened?..")
 		self.pushLayerFront(self._titrbI)
-		self.schedule.scheduleAfter(1, self.foo_03)
+		self.schedule.scheduleAfter(6, self.foo_02)
+
+	def foo_02(self):
+		self._titrbI.text = 'Thank you for playing our game!'
+		self.schedule.scheduleAfter(4, self.foo_03)
 
 	def foo_03(self):
-		self._titrbI.text = 'T|/|TPb| TYT'
-		self.schedule.scheduleAfter(1, self.foo_05)
+		self._titrbI.text = 'Code: A. Bond, A. Moiseenko'
+		self.schedule.scheduleAfter(4, self.foo_04)
+
+	def foo_04(self):
+		self._titrbI.text = 'Code: A. Ovsyannikov, D. Shatov'
+		self.schedule.scheduleAfter(4, self.foo_05)
 
 	def foo_05(self):
+		self._titrbI.text = 'Art: Mara Sun, S. Balashova'
+		self.schedule.scheduleAfter(4, self.foo_06)
+
+	def foo_06(self):
+		self._titrbI.text = 'Music and sounds: D. Shatov'
+		self.schedule.scheduleAfter(4, self.foo_07)
+
+	def foo_07(self):
 		self.pushLayerFront(StaticBackgroundLauer('rc/img/1600x1200bg_f2.png', mode='scale'))
-		self.schedule.scheduleAfter(1, self.foo_10)
+		self.schedule.scheduleAfter(6, self.foo_09)
+
+	def foo_09(self):
+		self.pushLayerFront(StaticBackgroundLauer('rc/img/Kosmo4.png', mode='scale'))
+		self.schedule.scheduleAfter(6, self.foo_10)
 
 	def foo_10(self):
 		self.pushLayerFront(Button(
@@ -342,7 +362,7 @@ class StartupScreen(Screen):
 class TutorialScreen(Screen):
 	def init(self):
 		# ТУТ КАРТИНКА С ТУТОРИАЛОМ
-		self.pushLayerFront(StaticBackgroundLauer('rc/img/1600x1200bg_2.png', mode='fill'))
+		self.pushLayerFront(StaticBackgroundLauer('rc/img/tutorial.png', mode='scale'))
 		self.pushLayerFront(Button(
 			onclick=self.menu,
 			# left, right, top, bottom - отступы с краёв
