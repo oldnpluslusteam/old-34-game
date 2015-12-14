@@ -102,11 +102,6 @@ class GameLayer(GameLayer_):
 		KEY.P: {"action": "pause"}
 	}
 	def init(self,*args,**kwargs):
-		# if self.background_player == 0:
-		# 	self.background_player = static.Play("rc/snd/background.wav")
-		# 	self.background_player.eos_action = self.background_player.EOS_LOOP
-		# else:
-		# 	self.background_player.play()
 		print "Inited"
 		self._player = self._game.getEntityById('player')
 		self._camera.setController(self._player)
@@ -155,9 +150,6 @@ class GameLayer(GameLayer_):
 		games_screen = self.screen
 		games_screen.next = Screen.new("PAUSE")
 
-	# def hide(self,hide=True):
-	# 	self.background_player.pause()
-
 @Screen.ScreenClass('GAME')
 class GameScreen(Screen):
 	def init(self,level_data=level0_data,*args,**kwargs):
@@ -169,6 +161,8 @@ class GameScreen(Screen):
 		game.loadFromJSON('rc/lvl/level0.json')
 		self.game = game
 		self.game.on("hitBig", self.foo)
+
+		music.Play('rc/snd/background.wav')
 
 		self.pushLayerFront(DynamicBG(game.getEntityById('player'), self._ld['bg']))
 		self.game_layer = GameLayer(game=game, camera=Camera())
@@ -256,11 +250,23 @@ class DeathScreen(Screen):
 @Screen.ScreenClass('WIN')
 class WinScreen(Screen):
 	def init(self):
+		self.schedule = Schedule()
+		self.on('update', self.schedule.update)
+		self.schedule.scheduleAfter(1, self.foo_00)
 		self.pushLayerFront(StaticBackgroundLauer('rc/img/1600x1200bg.png', mode='fill'))
 
-		self.pushLayerFront(GUITextItem(
+	def foo_00(self):
+		self._titrbI = GUITextItem(
 			layout={'width': 256, 'height': 50, 'top': 200},
-			text="You have won"))
+			text="You win")
+		self.pushLayerFront(self._titrbI)
+		self.schedule.scheduleAfter(1, self.foo_03)
+
+	def foo_03(self):
+		self._titrbI.text = 'T|/|TPb| TYT'
+		self.schedule.scheduleAfter(1, self.foo_10)
+
+	def foo_10(self):
 		self.pushLayerFront(Button(
 			onclick=self.new_game,
 			layout={'width': 256, 'height': 50, 'top': 300},
