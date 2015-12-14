@@ -22,7 +22,7 @@ class Spaceship(GameEntity,
     _fuel = 100.0
     _fuelInSecond = 3.4
     _mass = 3.0
-    _inertion = 1.0
+    _inertion = 0.9
     z_index = 1
 
     def hitBig(self, entity):
@@ -70,6 +70,7 @@ class Spaceship(GameEntity,
         self.thruster_exhaust_right.parent = self
         self.game.addEntity(self.thruster_exhaust_right)
         self.thruster_exhaust_right.animations = "rc/ani/TE_right.json"
+        self.inertion = self._inertion
 
     def handle_velocity(self, vector, dt):
         v = self.velocity
