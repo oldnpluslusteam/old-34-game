@@ -32,6 +32,8 @@ class Spaceship(GameEntity,
             self.game.trigger("hitBig")
             self._left_tourbin_sound_player.pause()
             self._right_tourbin_sound_player.pause()
+        else:
+            Play("rc/snd/do_teleport.wav")
 
     def hitSmall(self, entity):
         try:

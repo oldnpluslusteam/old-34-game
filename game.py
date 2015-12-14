@@ -218,6 +218,10 @@ class GameScreen(Screen):
 
 	def on_show(self):
 		self.game_layer.listen("update")
+		self.background_player.play()
+
+	def hide(self,hide=True):
+		self.background_player.pause()
 
 	def on_key_press(self,key,mod):
 		pass#GAME_CONSOLE.write('SSC:Key down:',KEY.symbol_string(key),'(',key,') [+',KEY.modifiers_string(mod),']')
