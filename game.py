@@ -29,6 +29,8 @@ from ui.progress_bar import ProgressBar
 from ui.dynamic_bg import DynamicBG
 from ui.button import Button
 
+import math
+
 GAME_CONSOLE.visible = False
 
 class GUITextItem(GUITextItem_):
@@ -96,6 +98,11 @@ class GameLayer(GameLayer_):
 
 	background_player = 0
 
+	_NORMAL_DIAGONAL = 1000.0
+	_NORMAL_ZOOM = 0.35
+	_MIN_ZOOM = 0.20
+	_MAX_ZOOM = 2.0
+
 	__KEYMAP = {
 		KEY.RCTRL: {"action": "right_thruster"},
 		KEY.LCTRL: {"action": "left_thruster"},
@@ -106,6 +113,11 @@ class GameLayer(GameLayer_):
 		self._player = self._game.getEntityById('player')
 		self._camera.setController(self._player)
 		self._camera.scale = 0.35
+		GAME_CONSOLE.write('INI GL')
+
+	def on_add_to_screen(self, screen):
+		self.subscribe(self.screen, 'vp:resize')
+		self.listen('vp:resize')
 
 	def on_key_press(self,key,mod):
 		'''
@@ -149,6 +161,12 @@ class GameLayer(GameLayer_):
 		self.ignore('update')
 		games_screen = self.screen
 		games_screen.next = Screen.new("PAUSE")
+
+	def on_viewport_resize(self, oldWidth, oldHeight):
+		diag = math.sqrt(self.width**2 + self.height**2)
+		z = self._NORMAL_ZOOM * (diag / self._NORMAL_DIAGONAL)
+		z = min(self._MAX_ZOOM, max(self._MIN_ZOOM, z))
+		self._camera.scale = z
 
 @Screen.ScreenClass('GAME')
 class GameScreen(Screen):
@@ -209,6 +227,7 @@ class GameScreen(Screen):
 
 	def pause(self, *args):
 		self.game_layer.release_pause()
+
 
 @Screen.ScreenClass('PAUSE')
 class PauseScreen(Screen):
