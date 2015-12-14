@@ -11,8 +11,8 @@ import entities.teleport
 import entities.trash
 
 _INITIAL_CLEAR_SPACE = 256
-_MAX_SPENT_FUEL = 50 # Before creating teleports
-_TELEPORT_NEW_DENSITY = 1.0
+_MAX_SPENT_FUEL = 150 # Before creating teleports
+_TELEPORT_NEW_DENSITY = 0.2
 _FAR_BORDERLINE = 3000
 _NEAR_BORDERLINE = 1500
 
