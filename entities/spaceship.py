@@ -22,7 +22,7 @@ class Spaceship(GameEntity,
     _fuel = 100.0
     _fuelInSecond = 3.4
     _mass = 3.0
-    _inertion = 0.9
+    _inertion = 1.0
     z_index = 1
 
     def hitBig(self, entity):
@@ -78,38 +78,38 @@ class Spaceship(GameEntity,
     def handle_left_engine(self, dt):
         self.angularVelocity += self._standardAngleVelocity*dt
         self.handle_velocity(directionFromAngle(self.rotation), dt)
-        self.change_fuel(-self._fuelInSecond*dt)
+        self.change_fuel(-Spaceship._fuelInSecond*dt)
 
     def handle_right_engine(self, dt):
         self.angularVelocity -= self._standardAngleVelocity*dt
         self.handle_velocity(directionFromAngle(self.rotation), dt)
-        self.change_fuel(-self._fuelInSecond*dt)
+        self.change_fuel(-Spaceship._fuelInSecond*dt)
 
     def change_fuel(self, diff):
-        self._fuel += diff
+        Spaceship._fuel += diff
         if diff < 0:
             self.game.onFuelSpent(-diff)
-        if (self._fuel < 0):
-            self._fuel = 0
-        if (self._fuel > 100):
-            self._fuel = 100
+        if (Spaceship._fuel < 0):
+            Spaceship._fuel = 0
+        if (Spaceship._fuel > 100):
+            Spaceship._fuel = 100
 
     def update(self, dt):
-        if (self._left_engine and self._fuel > 0):
+        if (self._left_engine and Spaceship._fuel > 0):
             self.handle_left_engine(dt)
 
-        if (self._right_engine and self._fuel > 0):
+        if (self._right_engine and Spaceship._fuel > 0):
             self.handle_right_engine(dt)
 
     def set_right_thruster(self, is_enabled):
         self._right_engine = is_enabled
-        if (self._fuel > 0):
+        if (Spaceship._fuel > 0):
             state = "on" if is_enabled else "off"
         else:
             state = "off"
         self.thruster_exhaust_right.animation = state
         try:
-            if self._right_tourbin_sound_player.playing != is_enabled:
+            if self._right_tourbin_sound_player.playing != (is_enabled and Spaceship._fuel > 0):
                 if is_enabled:
                     self._right_tourbin_sound_player.play()
                 else:
@@ -119,13 +119,13 @@ class Spaceship(GameEntity,
 
     def set_left_thruster(self, is_enabled):
         self._left_engine = is_enabled
-        if (self._fuel > 0):
+        if (Spaceship._fuel > 0):
             state = "on" if is_enabled else "off"
         else:
             state = "off"
         self.thruster_exhaust_left.animation = state
         try:
-            if self._left_tourbin_sound_player.playing != is_enabled:
+            if self._left_tourbin_sound_player.playing != (is_enabled and Spaceship._fuel > 0):
                 if is_enabled:
                     self._left_tourbin_sound_player.play()
                 else:

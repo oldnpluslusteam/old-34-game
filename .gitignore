@@ -4,6 +4,5 @@
 .idea/
 .idea/*
 *.sublime-project
-.gitignore
-*.mp3
-*.wav
+rc/snd/background.wav
+

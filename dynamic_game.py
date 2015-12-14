@@ -10,11 +10,11 @@ import entities.supermassive_trash
 import entities.teleport
 import entities.trash
 
-_INITIAL_CLEAR_SPACE = 256
-_MAX_SPENT_FUEL = 50 # Before creating teleports
-_TELEPORT_NEW_DENSITY = 1.0
-_FAR_BORDERLINE = 3000
-_NEAR_BORDERLINE = 1500
+_INITIAL_CLEAR_SPACE = 900
+_MAX_SPENT_FUEL = 150 # Before creating teleports
+_TELEPORT_NEW_DENSITY = 0.15
+_FAR_BORDERLINE = 4000
+_NEAR_BORDERLINE = 2000
 
 def not_in_square(sqCenter, sqRadius, point):
 	return (point[0] < sqCenter[0] - sqRadius) \
