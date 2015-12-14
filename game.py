@@ -41,7 +41,7 @@ def level2_data():
 	return {
 		'generation': {
 			'supermassive-trash-entity': {
-				'density': 0.4 # Things per 1024x1024 units
+				'density': 0.45 # Things per 1024x1024 units
 			},
 			'trash-entity': {
 				'density': 6.0
@@ -59,7 +59,7 @@ def level1_data():
 	return {
 		'generation': {
 			'supermassive-trash-entity': {
-				'density': 0.2 # Things per 1024x1024 units
+				'density': 0.3 # Things per 1024x1024 units
 			},
 			'trash-entity': {
 				'density': 7.0
@@ -77,16 +77,16 @@ def level0_data():
 	return {
 		'generation': {
 			'supermassive-trash-entity': {
-				'density': 0.1 # Things per 1024x1024 units
+				'density': 0.25 # Things per 1024x1024 units
 			},
 			'trash-entity': {
-				'density': 9.0
+				'density': 8.0
 			},
 			'teleport-entity': {
 				'density': 0.0
 			}
 		},
-		'next_data': None,
+		'next_data': level1_data,
 		'title': 'Level# 1',
 		'bg': 'rc/img/kosmosbg.png'
 	}
