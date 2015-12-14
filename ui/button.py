@@ -13,4 +13,3 @@ class Button(GUIItemLayer):
 
 	def draw(self):
 		BlitTextureToRect(self.img, self.rect)
-		DrawWireframeRect(self.rect)
