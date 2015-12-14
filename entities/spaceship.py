@@ -1,3 +1,5 @@
+import pyglet.media
+
 from entities.physical import SmallEntity
 from entities.space_entity import StandardSpaceEntity
 from entities.teleport import Teleport
@@ -28,6 +30,8 @@ class Spaceship(GameEntity,
             Play("rc/snd/destroy.wav")
             self.game.ignore("update")
             self.game.trigger("hitBig")
+            self._left_tourbin_sound_player.pause()
+            self._right_tourbin_sound_player.pause()
 
     def hitSmall(self, entity):
         try:
@@ -36,27 +40,23 @@ class Spaceship(GameEntity,
         except:
             pass
 
-    # time_for_full_velocity = 3.0
-    # full_velocity = 150
-    #
-    # left_time_for_full_velocity = time_for_full_velocity
-    # left_full_velocity = full_velocity
-    #
-    # standardVelocity = 3000
+    def preload_engine_sounds(self):
+        for side in ('right', 'left'):
+            p = getattr(Spaceship, '_'+side+'_tourbin_sound_player', None)
+            if p is None:
+                snd = pyglet.media.load('rc/snd/tourbin-'+side+'.wav', streaming=False)
+                p = pyglet.media.Player()
+                p.eos_action = p.EOS_LOOP
+                p.queue(snd)
+                setattr(Spaceship, '_'+side+'_tourbin_sound_player', p)
+            p.pause()
+
     def spawn(self):
         try:
             self._left_tourbin_sound_player.pause()
             self._right_tourbin_sound_player.pause()
         except AttributeError:
-            try:
-                self._left_tourbin_sound_player = Play("rc/snd/tourbin-left.wav")
-                self._left_tourbin_sound_player.eos_action = self._left_tourbin_sound_player.EOS_LOOP
-                self._left_tourbin_sound_player.pause()
-                self._right_tourbin_sound_player = Play("rc/snd/tourbin-right.wav")
-                self._right_tourbin_sound_player.eos_action = self._right_tourbin_sound_player.EOS_LOOP
-                self._right_tourbin_sound_player.pause()
-            except Exception as e:
-                pass
+            self.preload_engine_sounds()
 
         self._right_engine = False
         self._left_engine = False
@@ -109,12 +109,11 @@ class Spaceship(GameEntity,
             state = "off"
         self.thruster_exhaust_right.animation = state
         try:
-            if self._right_tourbin_sound_player.playing:
-                if not is_enabled:
+            if self._right_tourbin_sound_player.playing != is_enabled:
+                if is_enabled:
+                    self._right_tourbin_sound_player.play()
+                else:
                     self._right_tourbin_sound_player.pause()
-                return
-            else:
-                self._right_tourbin_sound_player.play()
         except:
             pass
 
@@ -126,14 +125,11 @@ class Spaceship(GameEntity,
             state = "off"
         self.thruster_exhaust_left.animation = state
         try:
-            if self._left_tourbin_sound_player.playing:
-                if not is_enabled:
+            if self._left_tourbin_sound_player.playing != is_enabled:
+                if is_enabled:
+                    self._left_tourbin_sound_player.play()
+                else:
                     self._left_tourbin_sound_player.pause()
-                    state = "on" if is_enabled else "off"
-                    self.thruster_exhaust_left.animation = state
-                return
-            else:
-                self._left_tourbin_sound_player.play()
         except:
             pass
 
@@ -142,5 +138,5 @@ class Spaceship(GameEntity,
         self.animation = "standard"
 
     def on_destroy(self):
-        self._left_tourbin_sound_player.pause()
-        self._right_tourbin_sound_player.pause()
+        self._left_tourbin_sound_player.stop()
+        self._right_tourbin_sound_player.stop()
