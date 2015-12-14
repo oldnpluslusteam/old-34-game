@@ -86,7 +86,7 @@ def level0_data():
 				'density': 0.0
 			}
 		},
-		'next_data': level1_data,
+		'next_data': None,
 		'title': 'Level# 1',
 		'bg': 'rc/img/kosmosbg.png'
 	}
@@ -95,8 +95,6 @@ class GameLayer(GameLayer_):
 	'''
 	Наследник игрового слоя.
 	'''
-
-	background_player = 0
 
 	_NORMAL_DIAGONAL = 1000.0
 	_NORMAL_ZOOM = 0.35
@@ -171,8 +169,7 @@ class GameLayer(GameLayer_):
 @Screen.ScreenClass('GAME')
 class GameScreen(Screen):
 	def init(self,level_data=level0_data,*args,**kwargs):
-		self.background_player = ssound.Play('rc/snd/background.wav')
-		self.background_player.eos_action = self.background_player.EOS_LOOP
+		music.Play('rc/snd/background.wav')
 		self._ld = level_data()
 		GAME_CONSOLE.write('Next level: ', self._ld['title'], '!')
 
@@ -211,7 +208,7 @@ class GameScreen(Screen):
 		self.endOfGame()
 
 	def endOfGame(self):
-		self.background_player.pause()
+		pass
 
 	def onNextLevel(self):
 		if self._ld['next_data'] is not None:
@@ -274,13 +271,15 @@ class DeathScreen(Screen):
 	def new_game(self, *args):
 		self.next = Screen.new('STARTUP')
 
+# @Screen.ScreenClass('STARTUP') # Unomment to show on startup (& comment other one)
 @Screen.ScreenClass('WIN')
 class WinScreen(Screen):
 	def init(self):
+		# music.Play('rc/snd/background.wav') # <------------------------------------------------------------------------- FINAL MUSIC
 		self.schedule = Schedule()
 		self.on('update', self.schedule.update)
 		self.schedule.scheduleAfter(1, self.foo_00)
-		self.pushLayerFront(StaticBackgroundLauer('rc/img/1600x1200bg.png', mode='fill'))
+		self.pushLayerFront(StaticBackgroundLauer('rc/img/1600x1200bg.png', mode='scale'))
 
 	def foo_00(self):
 		self._titrbI = GUITextItem(
@@ -291,6 +290,10 @@ class WinScreen(Screen):
 
 	def foo_03(self):
 		self._titrbI.text = 'T|/|TPb| TYT'
+		self.schedule.scheduleAfter(1, self.foo_05)
+
+	def foo_05(self):
+		self.pushLayerFront(StaticBackgroundLauer('rc/img/1600x1200bg_f2.png', mode='scale'))
 		self.schedule.scheduleAfter(1, self.foo_10)
 
 	def foo_10(self):
@@ -306,8 +309,7 @@ class WinScreen(Screen):
 class StartupScreen(Screen):
 
 	def init(self):
-		self.music_player = ssound.Play("rc/snd/menu.wav")
-		self.music_player.pause()
+		music.Play("rc/snd/menu.wav")
 		self.pushLayerFront(StaticBackgroundLauer('rc/img/1600x1200bg_2.png', mode='fill'))
 
 		self.pushLayerFront(Button(
@@ -318,14 +320,9 @@ class StartupScreen(Screen):
 			onclick=self.exit_game,
 			layout={'width': 256, 'height': 50, 'top': 400},
 			text="Exit"))
-		self.music_player.play()
 
 	def new_game(self, *args):
 		self.next = Screen.new('GAME')
-		self.music_player.pause()
 
 	def exit_game(self, *args):
 		exit()
-
-	# def init(self, *args, **kwargs):
-	# 	self.next = Screen.new('GAME')
