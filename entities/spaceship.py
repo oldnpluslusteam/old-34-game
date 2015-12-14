@@ -19,6 +19,9 @@ class Spaceship(GameEntity,
     _standardAngleVelocity = 130
     _standardVelocity = 400
 
+    _maxAngleVelocity = 200
+    _maxVelocity = 300
+
     _fuel = 100.0
     _fuelInSecond = 3.4
     _mass = 3.0
@@ -76,15 +79,36 @@ class Spaceship(GameEntity,
 
     def handle_velocity(self, vector, dt):
         v = self.velocity
-        self.velocity = v[0] + vector[0]*self._standardVelocity*dt, v[1] + vector[1]*self._standardVelocity*dt
+        targetDeltaX = vector[0]*self._standardVelocity*dt
+        targetDeltaY = vector[1]*self._standardVelocity*dt
+        tmpVelocity = [v[0] + targetDeltaX, v[1] + targetDeltaY]
+        if tmpVelocity[0] > self._maxVelocity:
+            tmpVelocity[0] = self._maxVelocity
+        if tmpVelocity[1] > self._maxVelocity:
+            tmpVelocity[1] = self._maxVelocity
+        self.velocity = (tmpVelocity[0], tmpVelocity[1])
+
+    def checkVelocity(self):
+        v = self.velocity
+        tmpVelocity = [v[0], v[1]]
+        if tmpVelocity[0] > self._maxVelocity:
+            tmpVelocity[0] = self._maxVelocity
+        if tmpVelocity[1] > self._maxVelocity:
+            tmpVelocity[1] = self._maxVelocity
+        self.velocity = (tmpVelocity[0], tmpVelocity[1])
+
+    def handle_angular_velocity(self, delta):
+        self.angularVelocity += delta
+        if self.angularVelocity > self._maxAngleVelocity:
+            self.angularVelocity = self._maxAngleVelocity
 
     def handle_left_engine(self, dt):
-        self.angularVelocity += self._standardAngleVelocity*dt
+        self.handle_angular_velocity(self._standardAngleVelocity*dt)
         self.handle_velocity(directionFromAngle(self.rotation), dt)
         self.change_fuel(-Spaceship._fuelInSecond*dt)
 
     def handle_right_engine(self, dt):
-        self.angularVelocity -= self._standardAngleVelocity*dt
+        self.handle_angular_velocity(-self._standardAngleVelocity*dt)
         self.handle_velocity(directionFromAngle(self.rotation), dt)
         self.change_fuel(-Spaceship._fuelInSecond*dt)
 
@@ -103,6 +127,7 @@ class Spaceship(GameEntity,
 
         if (self._right_engine and Spaceship._fuel > 0):
             self.handle_right_engine(dt)
+        self.checkVelocity()
 
     def set_right_thruster(self, is_enabled):
         self._right_engine = is_enabled
