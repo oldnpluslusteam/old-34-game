@@ -22,7 +22,7 @@ class Spaceship(GameEntity,
     _fuel = 100.0
     _fuelInSecond = 3.4
     _mass = 3.0
-    _inertion = 0.9
+    _inertion = 1.0
     z_index = 1
 
     def hitBig(self, entity):
