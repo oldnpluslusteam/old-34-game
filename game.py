@@ -102,8 +102,8 @@ class GameLayer(GameLayer_):
 	_MAX_ZOOM = 2.0
 
 	__KEYMAP = {
-		KEY.RCTRL: {"action": "right_thruster"},
-		KEY.LCTRL: {"action": "left_thruster"},
+		KEY.X: {"action": "right_thruster"},
+		KEY.Z: {"action": "left_thruster"},
 		KEY.P: {"action": "pause"}
 	}
 	def init(self,*args,**kwargs):
