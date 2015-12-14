@@ -70,6 +70,7 @@ class Spaceship(GameEntity,
         self.thruster_exhaust_right.parent = self
         self.game.addEntity(self.thruster_exhaust_right)
         self.thruster_exhaust_right.animations = "rc/ani/TE_right.json"
+        self.inertion = self._inertion
 
     def handle_velocity(self, vector, dt):
         v = self.velocity
