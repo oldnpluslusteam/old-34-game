@@ -102,11 +102,6 @@ class GameLayer(GameLayer_):
 		KEY.P: {"action": "pause"}
 	}
 	def init(self,*args,**kwargs):
-		# if self.background_player == 0:
-		# 	self.background_player = static.Play("rc/snd/background.wav")
-		# 	self.background_player.eos_action = self.background_player.EOS_LOOP
-		# else:
-		# 	self.background_player.play()
 		print "Inited"
 		self._player = self._game.getEntityById('player')
 		self._camera.setController(self._player)
@@ -155,9 +150,6 @@ class GameLayer(GameLayer_):
 		games_screen = self.screen
 		games_screen.next = Screen.new("PAUSE")
 
-	# def hide(self,hide=True):
-	# 	self.background_player.pause()
-
 @Screen.ScreenClass('GAME')
 class GameScreen(Screen):
 	def init(self,level_data=level0_data,*args,**kwargs):
@@ -169,6 +161,8 @@ class GameScreen(Screen):
 		game.loadFromJSON('rc/lvl/level0.json')
 		self.game = game
 		self.game.on("hitBig", self.foo)
+
+		music.Play('rc/snd/background.wav')
 
 		self.pushLayerFront(DynamicBG(game.getEntityById('player'), self._ld['bg']))
 		self.game_layer = GameLayer(game=game, camera=Camera())
