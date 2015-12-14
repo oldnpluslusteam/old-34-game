@@ -86,7 +86,7 @@ def level0_data():
 				'density': 0.0
 			}
 		},
-		'next_data': level1_data,
+		'next_data': None,
 		'title': 'Level# 1',
 		'bg': 'rc/img/kosmosbg.png'
 	}
@@ -290,40 +290,60 @@ class WinScreen(Screen):
 			layout={'width': 256, 'height': 64, 'top': 100},
 			text="...what's happened?..")
 		self.pushLayerFront(self._titrbI)
-		self.schedule.scheduleAfter(6, self.foo_02)
+		self.schedule.scheduleAfter(8, self.foo_02)
 
 	def foo_02(self):
-		self._titrbI.text = 'Thank you for playing our game!'
-		self.schedule.scheduleAfter(4, self.foo_03)
+		self._titrbI.text = 'THANK YOU for playing!'
+		self.schedule.scheduleAfter(4, self.foo_02t)
 
-	def foo_03(self):
-		self._titrbI.text = 'Code: A. Bond, A. Moiseenko'
-		self.schedule.scheduleAfter(4, self.foo_04)
+	def foo_02t(self):
+		self._titrbI.text = 'OpeNPP Team:'
+		self.schedule.scheduleAfter(2, self.foo_031)
+
+	def foo_031(self):
+		self._titrbI.text = 'Dev leader: A. Bond'
+		self.schedule.scheduleAfter(2, self.foo_032)
+
+	def foo_032(self):
+		self._titrbI.text = 'Code: A. Moiseenko'
+		self.schedule.scheduleAfter(2, self.foo_033)
+
+	def foo_033(self):
+		self._titrbI.text = 'Code: A. Ovsyannikov'
+		self.schedule.scheduleAfter(2, self.foo_034)
+
+	def foo_034(self):
+		self._titrbI.text = 'Code: D. Shatov'
+		self.schedule.scheduleAfter(2, self.foo_04)
 
 	def foo_04(self):
-		self._titrbI.text = 'Code: A. Ovsyannikov, D. Shatov'
-		self.schedule.scheduleAfter(4, self.foo_05)
+		self._titrbI.text = 'Art: S. Balashova'
+		self.schedule.scheduleAfter(2, self.foo_05)
 
 	def foo_05(self):
-		self._titrbI.text = 'Art: Mara Sun, S. Balashova'
-		self.schedule.scheduleAfter(4, self.foo_06)
+		self._titrbI.text = 'Art: Mara Sun'
+		self.schedule.scheduleAfter(2, self.foo_06)
 
 	def foo_06(self):
 		self._titrbI.text = 'Music and sounds: D. Shatov'
-		self.schedule.scheduleAfter(4, self.foo_07)
+		self.schedule.scheduleAfter(2, self.foo_06c)
+
+	def foo_06c(self):
+		self._titrbI.text = ''
+		self.schedule.scheduleAfter(1, self.foo_07)
 
 	def foo_07(self):
 		self.pushLayerFront(StaticBackgroundLauer('rc/img/1600x1200bg_f2.png', mode='scale'))
-		self.schedule.scheduleAfter(6, self.foo_09)
+		self.schedule.scheduleAfter(7, self.foo_09)
 
 	def foo_09(self):
 		self.pushLayerFront(StaticBackgroundLauer('rc/img/Kosmo4.png', mode='scale'))
-		self.schedule.scheduleAfter(6, self.foo_10)
+		self.schedule.scheduleAfter(7, self.foo_10)
 
 	def foo_10(self):
 		self.pushLayerFront(Button(
 			onclick=self.menu,
-			layout={'width': 256, 'height': 64, 'top': 300},
+			layout={'width': 256, 'height': 64, 'top': 20},
 			img="rc/img/256x64_menu_btn.png"))
 
 	def menu(self, *args):
