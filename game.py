@@ -281,6 +281,7 @@ class WinScreen(Screen):
 @Screen.ScreenClass('STARTUP')
 class StartupScreen(Screen):
 	def init(self):
+		self.music_player = ssound.Play("rc/snd/menu.wav")
 		self.pushLayerFront(StaticBackgroundLauer('rc/img/1600x1200bg_2.png', mode='fill'))
 
 		self.pushLayerFront(Button(
@@ -294,6 +295,7 @@ class StartupScreen(Screen):
 
 	def new_game(self, *args):
 		self.next = Screen.new('GAME')
+		self.music_player.pause()
 
 	def exit_game(self, *args):
 		exit()
