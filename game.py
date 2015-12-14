@@ -195,7 +195,7 @@ class GameScreen(Screen):
 		self.pushLayerFront(Button(
 			onclick=self.pause,
 			layout={'width': 256, 'height': 64, 'right': 20, 'top': 20},
-			img="rc/img/256*64_menu_btn.png"))
+			img="rc/img/256x64_menu_btn.png"))
 
 	def foo(self):
 		GAME_CONSOLE.write('your died!')
@@ -239,15 +239,15 @@ class PauseScreen(Screen):
 		self.pushLayerFront(Button(
 			onclick=self.continue_game,
 			layout={'width': 256, 'height': 64, 'top': 200},
-			img="rc/img/256*64_continue_btn.png"))
+			img="rc/img/256x64_continue_btn.png"))
 		self.pushLayerFront(Button(
 			onclick=self.new_game,
 			layout={'width': 256, 'height': 64, 'top': 300},
-			img="rc/img/256*64_new_game_btn.png"))
+			img="rc/img/256x64_new_game_btn.png"))
 		self.pushLayerFront(Button(
 			onclick=self.menu,
 			layout={'width': 256, 'height': 64, 'top': 400},
-			img="rc/img/256*64_menu_btn.png"))
+			img="rc/img/256x64_menu_btn.png"))
 
 	def new_game(self, *args):
 		self.next = Screen.new('GAME')
@@ -270,7 +270,7 @@ class DeathScreen(Screen):
 		self.pushLayerFront(Button(
 			onclick=self.new_game,
 			layout={'width': 256, 'height': 64, 'top': 300},
-			img="rc/img/256*64_new_game_btn.png"))
+			img="rc/img/256x64_new_game_btn.png"))
 
 	def new_game(self, *args):
 		self.next = Screen.new('STARTUP')
@@ -304,7 +304,7 @@ class WinScreen(Screen):
 		self.pushLayerFront(Button(
 			onclick=self.menu,
 			layout={'width': 256, 'height': 64, 'top': 300},
-			img="rc/img/256*64_menu_btn.png"))
+			img="rc/img/256x64_menu_btn.png"))
 
 	def menu(self, *args):
 		self.next = Screen.new('STARTUP')
@@ -319,15 +319,15 @@ class StartupScreen(Screen):
 		self.pushLayerFront(Button(
 			onclick=self.new_game,
 			layout={'width': 256, 'height': 64, 'top': 200},
-			img="rc/img/256*64_new_game_btn.png"))
+			img="rc/img/256x64_new_game_btn.png"))
 		self.pushLayerFront(Button(
 			onclick=self.tutorial,
 			layout={'width': 256, 'height': 64, 'top': 300},
-			img="rc/img/256*64_tutorial_btn.png"))
+			img="rc/img/256x64_tutorial_btn.png"))
 		self.pushLayerFront(Button(
 			onclick=self.exit_game,
 			layout={'width': 256, 'height': 64, 'top': 400},
-			img="rc/img/256*64_exit_btn.png"))
+			img="rc/img/256x64_exit_btn.png"))
 
 	def new_game(self, *args):
 		self.next = Screen.new('GAME')
@@ -348,7 +348,7 @@ class TutorialScreen(Screen):
 			# left, right, top, bottom - отступы с краёв
 			# width, height - ставить как у картинки
 			layout={'width': 256, 'height': 64, 'bottom': 10, 'right': 20},
-			img="rc/img/256*64_menu_btn.png"))
+			img="rc/img/256x64_menu_btn.png"))
 
 	def menu(self, *args):
 		self.next = Screen.new('STARTUP')
