@@ -44,7 +44,7 @@ def level2_data():
 				'density': 0.5 # Things per 1024x1024 units
 			},
 			'trash-entity': {
-				'density': 2.5
+				'density': 5
 			},
 			'teleport-entity': {
 				'density': 0.0
@@ -62,7 +62,7 @@ def level1_data():
 				'density': 0.25 # Things per 1024x1024 units
 			},
 			'trash-entity': {
-				'density': 5.0
+				'density': 8.0
 			},
 			'teleport-entity': {
 				'density': 0.0
