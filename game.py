@@ -245,9 +245,9 @@ class PauseScreen(Screen):
 			layout={'width': 256, 'height': 64, 'top': 300},
 			img="rc/img/256*64_new_game_btn.png"))
 		self.pushLayerFront(Button(
-			onclick=self.exit_game,
+			onclick=self.menu,
 			layout={'width': 256, 'height': 64, 'top': 400},
-			img="rc/img/256*64_exit_btn.png"))
+			img="rc/img/256*64_menu_btn.png"))
 
 	def new_game(self, *args):
 		self.next = Screen.new('GAME')
@@ -256,8 +256,8 @@ class PauseScreen(Screen):
 		self.next = self._prevous
 		self.next.trigger("show")
 
-	def exit_game(self, *args):
-		exit()
+	def menu(self, *args):
+		self.next = Screen.new('STARTUP')
 
 @Screen.ScreenClass('DEATHSCREEN')
 class DeathScreen(Screen):
@@ -302,11 +302,11 @@ class WinScreen(Screen):
 
 	def foo_10(self):
 		self.pushLayerFront(Button(
-			onclick=self.new_game,
+			onclick=self.menu,
 			layout={'width': 256, 'height': 64, 'top': 300},
-			img="rc/img/256*64_new_game_btn.png"))
+			img="rc/img/256*64_menu_btn.png"))
 
-	def new_game(self, *args):
+	def menu(self, *args):
 		self.next = Screen.new('STARTUP')
 
 @Screen.ScreenClass('STARTUP')
@@ -318,8 +318,12 @@ class StartupScreen(Screen):
 
 		self.pushLayerFront(Button(
 			onclick=self.new_game,
-			layout={'width': 256, 'height': 64, 'top': 300},
+			layout={'width': 256, 'height': 64, 'top': 200},
 			img="rc/img/256*64_new_game_btn.png"))
+		self.pushLayerFront(Button(
+			onclick=self.tutorial,
+			layout={'width': 256, 'height': 64, 'top': 300},
+			img="rc/img/256*64_tutorial_btn.png"))
 		self.pushLayerFront(Button(
 			onclick=self.exit_game,
 			layout={'width': 256, 'height': 64, 'top': 400},
@@ -330,3 +334,21 @@ class StartupScreen(Screen):
 
 	def exit_game(self, *args):
 		exit()
+
+	def tutorial(self, *args):
+		self.next = Screen.new('TUTORIAL')
+
+@Screen.ScreenClass('TUTORIAL')
+class TutorialScreen(Screen):
+	def init(self):
+		# ТУТ КАРТИНКА С ТУТОРИАЛОМ
+		self.pushLayerFront(StaticBackgroundLauer('rc/img/1600x1200bg_2.png', mode='fill'))
+		self.pushLayerFront(Button(
+			onclick=self.menu,
+			# left, right, top, bottom - отступы с краёв
+			# width, height - ставить как у картинки
+			layout={'width': 256, 'height': 64, 'bottom': 10, 'right': 20},
+			img="rc/img/256*64_menu_btn.png"))
+
+	def menu(self, *args):
+		self.next = Screen.new('STARTUP')
