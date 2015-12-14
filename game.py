@@ -171,6 +171,8 @@ class GameLayer(GameLayer_):
 @Screen.ScreenClass('GAME')
 class GameScreen(Screen):
 	def init(self,level_data=level0_data,*args,**kwargs):
+		self.background_player = ssound.Play('rc/snd/background.wav')
+		self.background_player.eos_action = self.background_player.EOS_LOOP
 		self._ld = level_data()
 		GAME_CONSOLE.write('Next level: ', self._ld['title'], '!')
 
@@ -182,8 +184,6 @@ class GameScreen(Screen):
 		game.loadFromJSON('rc/lvl/level0.json')
 		self.game = game
 		self.game.on("hitBig", self.foo)
-
-		music.Play('rc/snd/background.wav')
 
 		self.pushLayerFront(DynamicBG(game.getEntityById('player'), self._ld['bg']))
 		self.game_layer = GameLayer(game=game, camera=Camera())
@@ -203,10 +203,15 @@ class GameScreen(Screen):
 	def foo(self):
 		GAME_CONSOLE.write('your died!')
 		self.next = Screen.new('DEATHSCREEN')
+		self.endOfGame()
 
 	def win(self):
 		GAME_CONSOLE.write('you are won!')
 		self.next = Screen.new('WIN')
+		self.endOfGame()
+
+	def endOfGame(self):
+		self.background_player.pause()
 
 	def onNextLevel(self):
 		if self._ld['next_data'] is not None:
@@ -299,8 +304,10 @@ class WinScreen(Screen):
 
 @Screen.ScreenClass('STARTUP')
 class StartupScreen(Screen):
+
 	def init(self):
 		self.music_player = ssound.Play("rc/snd/menu.wav")
+		self.music_player.pause()
 		self.pushLayerFront(StaticBackgroundLauer('rc/img/1600x1200bg_2.png', mode='fill'))
 
 		self.pushLayerFront(Button(
@@ -311,6 +318,7 @@ class StartupScreen(Screen):
 			onclick=self.exit_game,
 			layout={'width': 256, 'height': 50, 'top': 400},
 			text="Exit"))
+		self.music_player.play()
 
 	def new_game(self, *args):
 		self.next = Screen.new('GAME')
