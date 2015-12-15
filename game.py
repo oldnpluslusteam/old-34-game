@@ -86,7 +86,7 @@ def level0_data():
 				'density': 0.0
 			}
 		},
-		'next_data': None,
+		'next_data': level1_data,
 		'title': 'Level# 1',
 		'bg': 'rc/img/kosmosbg.png'
 	}
