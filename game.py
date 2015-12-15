@@ -41,10 +41,10 @@ def level2_data():
 	return {
 		'generation': {
 			'supermassive-trash-entity': {
-				'density': 0.45 # Things per 1024x1024 units
+				'density': 0.35 # Things per 1024x1024 units
 			},
 			'trash-entity': {
-				'density': 6.0
+				'density': 6.5
 			},
 			'teleport-entity': {
 				'density': 0.0
@@ -59,7 +59,7 @@ def level1_data():
 	return {
 		'generation': {
 			'supermassive-trash-entity': {
-				'density': 0.3 # Things per 1024x1024 units
+				'density': 0.25 # Things per 1024x1024 units
 			},
 			'trash-entity': {
 				'density': 7.0
@@ -77,7 +77,7 @@ def level0_data():
 	return {
 		'generation': {
 			'supermassive-trash-entity': {
-				'density': 0.25 # Things per 1024x1024 units
+				'density': 0.2 # Things per 1024x1024 units
 			},
 			'trash-entity': {
 				'density': 8.0
@@ -334,11 +334,15 @@ class WinScreen(Screen):
 
 	def foo_07(self):
 		self.pushLayerFront(StaticBackgroundLauer('rc/img/1600x1200bg_f2.png', mode='scale'))
-		self.schedule.scheduleAfter(7, self.foo_09)
+		self.schedule.scheduleAfter(8, self.foo_09)
 
 	def foo_09(self):
 		self.pushLayerFront(StaticBackgroundLauer('rc/img/Kosmo4.png', mode='scale'))
-		self.schedule.scheduleAfter(7, self.foo_10)
+		self.schedule.scheduleAfter(8, self.foo_09f)
+
+	def foo_09f(self):
+		self.pushLayerFront(StaticBackgroundLauer('rc/img/Kosmo5v2.png', mode='scale'))
+		self.schedule.scheduleAfter(1, self.foo_10)
 
 	def foo_10(self):
 		self.pushLayerFront(Button(
