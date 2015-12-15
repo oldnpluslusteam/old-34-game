@@ -288,7 +288,7 @@ class WinScreen(Screen):
 	def foo_00(self):
 		self._titrbI = GUITextItem(
 			layout={'width': 256, 'height': 64, 'top': 100},
-			text="...what's happened?..")
+			text="...what happened here?..")
 		self.pushLayerFront(self._titrbI)
 		self.schedule.scheduleAfter(8, self.foo_02)
 
