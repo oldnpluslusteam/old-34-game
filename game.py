@@ -357,7 +357,7 @@ class WinScreen(Screen):
 class StartupScreen(Screen):
 
 	def init(self):
-		music.Play("rc/snd/menu.wav")
+		music.Play("rc/snd/background.wav")
 		self.pushLayerFront(StaticBackgroundLauer('rc/img/1600x1200bg_2.png', mode='fill'))
 
 		self.pushLayerFront(Button(
